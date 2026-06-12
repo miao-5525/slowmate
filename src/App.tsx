@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { HashRouter, Routes, Route } from 'react-router-dom';
 import { AppProvider } from './contexts/AppContext';
 import Layout from './components/Layout';
 import HomePage from './pages/HomePage';
@@ -10,7 +10,7 @@ import styles from './App.module.css';
 
 export default function App() {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <AppProvider>
         <div className={styles.app}>
           <Routes>
@@ -25,6 +25,6 @@ export default function App() {
           </Routes>
         </div>
       </AppProvider>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
