@@ -1,0 +1,16 @@
+.page{padding:var(--space-lg)}
+.header{margin-bottom:var(--space-xl)}
+.title{font-size:var(--text-2xl);font-weight:700;color:var(--color-ink);margin-bottom:4px;letter-spacing:-.01em}
+.subtitle{font-size:var(--text-xs);color:var(--color-ink-secondary)}
+
+.search{
+  width:100%;padding:var(--space-md) var(--space-xl);
+  border-radius:var(--radius-full);font-size:var(--text-md);
+  background:var(--color-surface);border:1.5px solid var(--color-border);
+  margin-bottom:var(--space-xl);transition:all .2s;
+}
+.search::placeholder{color:var(--color-ink-tertiary)}
+.search:focus{border-color:var(--color-accent);box-shadow:0 0 0 3px var(--color-accent-light)}
+
+.cat{font-size:var(--text-sm);font-weight:600;color:var(--color-ink-secondary);margin:var(--space-lg) 0 var(--space-sm);padding-left:4px;letter-spacing:.02em}
+.list{display:flex;flex-direction:column;gap:var(--space-sm)}

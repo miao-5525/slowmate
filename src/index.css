@@ -1,0 +1,120 @@
+/* ========================================
+   慢慢来 V4 — Premium Design System
+   Clean, warm, sophisticated.
+   ======================================== */
+
+:root {
+  /* Palette */
+  --color-bg:        #F9F8F6;
+  --color-surface:   #FFFFFF;
+  --color-border:    #EDEAE5;
+  --color-border-strong: #DDD9D2;
+
+  --color-ink:       #2C2926;
+  --color-ink-secondary: #706B65;
+  --color-ink-tertiary: #A8A29A;
+
+  --color-accent:    #D4915C;
+  --color-accent-light: #F5EBE2;
+  --color-accent-soft: #FBF6F1;
+
+  --color-green:     #7A9D7E;
+  --color-green-light: #EBF2EC;
+  --color-red:       #C8786C;
+  --color-red-light: #F9F0EF;
+  --color-blue:      #7B9DB5;
+  --color-blue-light: #EEF3F7;
+  --color-amber:     #D4A85C;
+  --color-amber-light: #FBF5EA;
+
+  /* Radius */
+  --radius-sm:   8px;
+  --radius-md:   14px;
+  --radius-lg:   20px;
+  --radius-xl:   28px;
+  --radius-full: 9999px;
+
+  /* Shadows — barely there */
+  --shadow-xs: 0 1px 2px rgba(0,0,0,.03);
+  --shadow-sm: 0 2px 8px rgba(0,0,0,.04);
+  --shadow-md: 0 4px 20px rgba(0,0,0,.06);
+  --shadow-up: 0 -2px 12px rgba(0,0,0,.03);
+
+  /* Type scale */
+  --text-xs:  15px;
+  --text-sm:  17px;
+  --text-md:  20px;
+  --text-lg:  24px;
+  --text-xl:  30px;
+  --text-2xl: 36px;
+  --text-3xl: 44px;
+
+  /* Spacing */
+  --space-xs: 6px;
+  --space-sm: 10px;
+  --space-md: 16px;
+  --space-lg: 22px;
+  --space-xl: 30px;
+  --space-2xl: 40px;
+
+  --nav-height: 72px;
+  --fab-size: 58px;
+
+  /* Transitions */
+  --ease: cubic-bezier(.4,0,.2,1);
+  --ease-spring: cubic-bezier(.34,1.56,.64,1);
+}
+
+/* ── Reset ── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+html,body{
+  height:100%;
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  font-size:var(--text-md);
+  line-height:1.55;
+  color:var(--color-ink);
+  background:var(--color-bg);
+  -webkit-font-smoothing:antialiased;
+  -webkit-tap-highlight-color:transparent;
+  touch-action:manipulation;
+}
+
+#root{
+  height:100%;
+  max-width:480px;
+  margin:0 auto;
+  position:relative;
+  overflow:hidden;
+  background:var(--color-bg);
+  box-shadow:0 0 80px rgba(0,0,0,.06);
+}
+
+::-webkit-scrollbar{width:3px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--color-border-strong);border-radius:3px}
+
+button,input,textarea{font-family:inherit;outline:none;border:none}
+button{cursor:pointer;background:none;-webkit-tap-highlight-color:transparent}
+input,textarea{font-size:var(--text-md);color:var(--color-ink)}
+a{text-decoration:none;color:inherit}
+img{max-width:100%;display:block}
+
+/* ── Utility ── */
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
+
+/* ── Font size modes ── */
+html[data-font-size="large"]{
+  --text-xs:19px;--text-sm:21px;--text-md:25px;
+  --text-lg:30px;--text-xl:38px;--text-2xl:45px;--text-3xl:54px;
+}
+html[data-font-size="xlarge"]{
+  --text-xs:22px;--text-sm:25px;--text-md:30px;
+  --text-lg:36px;--text-xl:46px;--text-2xl:54px;--text-3xl:64px;
+}
+
+/* ── Shared animations ── */
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+@keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+@keyframes popIn{from{transform:scale(.85);opacity:0}to{transform:scale(1);opacity:1}}

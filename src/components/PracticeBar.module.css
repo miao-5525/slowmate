@@ -1,0 +1,63 @@
+/* ── Full bar (fixed bottom) ── */
+.bar{
+  position:fixed;bottom:0;left:0;right:0;max-width:480px;margin:0 auto;
+  background:var(--color-surface);border-top:1px solid var(--color-border);
+  padding:var(--space-md) var(--space-lg);
+  display:flex;align-items:center;gap:var(--space-md);
+  z-index:200;box-shadow:0 -4px 20px rgba(0,0,0,.06);
+}
+.stepInfo{flex:1;min-width:0}
+.stepLabel{font-size:11px;color:var(--color-ink-tertiary);font-weight:500;text-transform:uppercase;letter-spacing:.05em}
+.stepTitle{font-size:var(--text-sm);font-weight:600;color:var(--color-ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+.controls{display:flex;align-items:center;gap:var(--space-sm);flex-shrink:0}
+.ctrlBtn{
+  width:44px;height:44px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  transition:all .15s;
+}
+.ctrlBtn:active{background:var(--color-border)}
+.ctrlBtn:disabled{opacity:.3}
+.navBtn{background:var(--color-bg);border:1px solid var(--color-border)}
+
+.playBtn{
+  width:52px;height:52px;border-radius:50%;
+  background:var(--color-accent);color:#fff;
+  box-shadow:0 4px 14px rgba(212,145,92,.3);
+  display:flex;align-items:center;justify-content:center;
+  transition:transform .15s var(--ease-spring);
+}
+.playBtn:active{transform:scale(.9)}
+
+.speakingDot{width:8px;height:8px;border-radius:50%;background:#fff;animation:blink .5s infinite alternate}
+@keyframes blink{from{opacity:1}to{opacity:.2}}
+
+/* ── Minimized FAB ── */
+.fab{
+  position:fixed;bottom:calc(var(--nav-height) + 20px);right:16px;
+  width:56px;height:56px;border-radius:50%;
+  background:var(--color-accent);color:#fff;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 4px 20px rgba(212,145,92,.4);
+  z-index:200;font-size:24px;
+  animation:pulse 2s ease-in-out infinite;
+  transition:transform .2s var(--ease-spring);
+}
+.fab:active{transform:scale(.88)}
+@keyframes pulse{0%,100%{box-shadow:0 4px 20px rgba(212,145,92,.4)}50%{box-shadow:0 4px 30px rgba(212,145,92,.6)}}
+
+.fabBadge{
+  position:absolute;top:-4px;right:-4px;
+  width:20px;height:20px;border-radius:50%;
+  background:var(--color-red);color:#fff;
+  font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;
+}
+
+/* ── Minimize/Expand toggle ── */
+.minimizeBtn{
+  width:32px;height:32px;border-radius:50%;
+  background:var(--color-border);
+  display:flex;align-items:center;justify-content:center;
+  font-size:16px;color:var(--color-ink-tertiary);flex-shrink:0;
+}
+.minimizeBtn:active{background:var(--color-border-strong)}

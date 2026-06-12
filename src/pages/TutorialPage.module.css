@@ -1,0 +1,148 @@
+.page{padding:var(--space-lg);padding-bottom:130px}
+
+.backBtn{display:inline-flex;align-items:center;gap:var(--space-xs);color:var(--color-accent);font-size:var(--text-sm);font-weight:500;padding:var(--space-xs) 0;margin-bottom:var(--space-md)}
+.backBtn:active{opacity:.7}
+
+.header{text-align:center;padding:var(--space-lg) 0 var(--space-xl)}
+.headerIcon{width:80px;height:80px;border-radius:var(--radius-xl);background:var(--color-accent-soft);display:flex;align-items:center;justify-content:center;margin:0 auto var(--space-md)}
+.headerTitle{font-size:var(--text-2xl);font-weight:700;color:var(--color-ink);margin-bottom:4px;letter-spacing:-.01em}
+.headerDesc{font-size:var(--text-sm);color:var(--color-ink-secondary)}
+.headerBadge{margin-top:var(--space-md);display:inline-flex;align-items:center;gap:6px;padding:var(--space-xs) var(--space-lg);background:var(--color-accent-soft);color:var(--color-accent);border-radius:var(--radius-full);font-size:var(--text-xs);font-weight:600}
+
+.stepsTitle{font-size:var(--text-sm);font-weight:600;color:var(--color-ink-secondary);margin-bottom:var(--space-lg);padding-left:4px}
+
+/* ── Timeline ── */
+.timeline{position:relative;padding-left:36px}
+.timeline::before{content:'';position:absolute;left:26px;top:8px;bottom:8px;width:1.5px;background:var(--color-border-strong);border-radius:1px}
+
+.stepItem{position:relative;margin-bottom:var(--space-lg)}
+.stepItem:last-child{margin-bottom:0}
+
+.dot{position:absolute;left:-36px;top:0;width:52px;height:52px;border-radius:50%;background:var(--color-surface);border:2px solid var(--color-border-strong);display:flex;align-items:center;justify-content:center;font-size:var(--text-md);font-weight:600;color:var(--color-ink-tertiary);z-index:1;transition:all .25s}
+.dotDone{background:var(--color-green);border-color:var(--color-green);color:#fff}
+.dotActive{border-color:var(--color-accent);color:var(--color-accent);box-shadow:0 0 0 5px var(--color-accent-light)}
+
+.card{background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-lg);overflow:hidden;transition:all .2s}
+.cardDone{opacity:.5}
+.cardHead{display:flex;align-items:center;gap:var(--space-sm);padding:var(--space-lg);cursor:pointer;user-select:none}
+.cardTitle{flex:1;font-size:var(--text-md);font-weight:600;color:var(--color-ink)}
+.cardArrow{font-size:16px;color:var(--color-ink-tertiary);transition:transform .2s}
+.cardArrowOpen{transform:rotate(180deg)}
+
+.checkDot{width:26px;height:26px;border-radius:50%;border:2px solid var(--color-border-strong);display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;transition:all .2s}
+.checkDotChecked{background:var(--color-green);border-color:var(--color-green);color:#fff}
+
+/* ── Expanded body (text + mockup side by side) ── */
+.cardBody{padding:0 var(--space-lg) var(--space-lg);animation:slideDown .25s var(--ease)}
+@keyframes slideDown{from{opacity:0;max-height:0}to{opacity:1;max-height:800px}}
+
+.cardContent{display:flex;gap:var(--space-lg);align-items:flex-start}
+.cardText{flex:1;min-width:0}
+.stepDetail{font-size:var(--text-sm);color:var(--color-ink);line-height:1.7;margin-bottom:var(--space-sm)}
+.stepTip{font-size:var(--text-xs);color:var(--color-blue);background:var(--color-blue-light);padding:var(--space-xs) var(--space-sm);border-radius:var(--radius-sm);line-height:1.5;margin-bottom:var(--space-xs);border-left:3px solid var(--color-blue)}
+.stepWarning{font-size:var(--text-xs);color:var(--color-red);background:var(--color-red-light);padding:var(--space-xs) var(--space-sm);border-radius:var(--radius-sm);line-height:1.5;border-left:3px solid var(--color-red)}
+
+/* ── Bottom ── */
+.bottomBar{position:fixed;bottom:0;left:0;right:0;max-width:480px;margin:0 auto;background:var(--color-surface);border-top:1px solid var(--color-border);padding:var(--space-md) var(--space-lg);display:flex;gap:var(--space-md);z-index:100}
+.actionBtn{flex:1;padding:var(--space-md);border-radius:var(--radius-full);font-size:var(--text-md);font-weight:600;display:flex;flex-direction:column;align-items:center;gap:2px;transition:transform .15s var(--ease-spring);min-height:58px}
+.actionBtn:active{transform:scale(.95)}
+.aiBtn{background:var(--color-accent);color:#fff;box-shadow:0 4px 14px rgba(212,145,92,.3)}
+.doneBtn{background:var(--color-green);color:#fff;box-shadow:0 4px 14px rgba(122,157,126,.3)}
+.doneBtn:disabled{opacity:.5;box-shadow:none}
+
+.celebrate{position:fixed;inset:0;background:rgba(0,0,0,.3);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;z-index:300;animation:fadeIn .3s}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.celebrateCard{background:var(--color-surface);border-radius:var(--radius-xl);padding:var(--space-2xl);text-align:center;margin:var(--space-lg);max-width:340px;box-shadow:var(--shadow-md);animation:popIn .4s var(--ease-spring)}
+@keyframes popIn{from{transform:scale(.7);opacity:0}to{transform:scale(1);opacity:1}}
+.celIcon{font-size:64px;margin-bottom:var(--space-md)}
+.celTitle{font-size:var(--text-2xl);font-weight:700;color:var(--color-ink);margin-bottom:var(--space-sm)}
+.celText{font-size:var(--text-md);color:var(--color-ink-secondary);margin-bottom:var(--space-xl);line-height:1.7}
+.celBtn{display:inline-block;padding:var(--space-md) var(--space-xl);background:var(--color-accent);color:#fff;font-size:var(--text-md);font-weight:600;border-radius:var(--radius-full);box-shadow:0 4px 14px rgba(212,145,92,.3)}
+.celBtn:active{opacity:.85}
+
+/* ── Practice Entry Button ── */
+.practiceEntry{text-align:center;margin-bottom:var(--space-lg)}
+.practiceEntryBtn{
+  display:inline-flex;align-items:center;gap:var(--space-sm);
+  padding:var(--space-md) var(--space-xl);
+  background:var(--color-accent-soft);color:var(--color-accent);
+  border-radius:var(--radius-full);font-size:var(--text-md);font-weight:600;
+  border:1.5px dashed var(--color-accent);
+  transition:all .2s;
+}
+.practiceEntryBtn:active{background:var(--color-accent);color:#fff}
+.practiceEntryIcon{font-size:24px}
+.practiceEntryHint{font-size:var(--text-xs);opacity:.7;font-weight:400}
+
+/* ── Practice Mode Page ── */
+.practicePage{
+  display:flex;flex-direction:column;height:100%;
+  padding:var(--space-lg);padding-bottom:120px;
+}
+.practiceTop{display:flex;align-items:center;justify-content:space-between;margin-bottom:var(--space-lg)}
+.practiceStepBadge{
+  font-size:var(--text-xs);font-weight:600;color:var(--color-accent);
+  padding:4px 16px;border-radius:var(--radius-full);
+  background:var(--color-accent-soft);
+}
+.practiceMockup{display:flex;justify-content:center;margin-bottom:var(--space-lg)}
+.practiceContent{text-align:center;flex:1}
+.practiceStepTitle{
+  font-size:var(--text-xl);font-weight:700;color:var(--color-ink);
+  margin-bottom:var(--space-md);line-height:1.3;
+}
+.practiceStepDetail{
+  font-size:var(--text-md);color:var(--color-ink-secondary);
+  line-height:1.7;margin-bottom:var(--space-md);
+}
+.practiceTip{
+  font-size:var(--text-xs);color:var(--color-blue);
+  background:var(--color-blue-light);padding:var(--space-sm) var(--space-md);
+  border-radius:var(--radius-sm);max-width:320px;margin:0 auto var(--space-xs);
+  border-left:3px solid var(--color-blue);text-align:left;
+}
+.practiceWarning{
+  font-size:var(--text-xs);color:var(--color-red);
+  background:var(--color-red-light);padding:var(--space-sm) var(--space-md);
+  border-radius:var(--radius-sm);max-width:320px;margin:0 auto;
+  border-left:3px solid var(--color-red);text-align:left;
+}
+.practiceTtsBadge{
+  text-align:center;font-size:var(--text-xs);color:var(--color-ink-tertiary);
+  margin:var(--space-lg) 0;padding:var(--space-xs) 0;
+}
+
+/* ── Onboarding Overlay ── */
+.onboardOverlay{
+  position:fixed;inset:0;background:rgba(0,0,0,.4);
+  backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);
+  display:flex;align-items:center;justify-content:center;
+  z-index:400;padding:var(--space-lg);animation:fadeIn .3s;
+}
+.onboardCard{
+  background:var(--color-surface);border-radius:var(--radius-xl);
+  padding:var(--space-xl);max-width:340px;width:100%;
+  text-align:center;box-shadow:var(--shadow-md);
+  animation:popIn .4s var(--ease-spring);
+}
+.onboardIcon{font-size:48px;margin-bottom:var(--space-sm)}
+.onboardTitle{font-size:var(--text-xl);font-weight:700;color:var(--color-ink);margin-bottom:var(--space-lg)}
+.onboardSteps{display:flex;flex-direction:column;gap:var(--space-md);margin-bottom:var(--space-xl);text-align:left}
+.onboardStep{
+  display:flex;align-items:flex-start;gap:var(--space-sm);
+  font-size:var(--text-sm);color:var(--color-ink);line-height:1.5;
+}
+.onboardStep span{
+  width:24px;height:24px;border-radius:50%;
+  background:var(--color-accent);color:#fff;
+  display:flex;align-items:center;justify-content:center;
+  font-size:13px;font-weight:700;flex-shrink:0;margin-top:1px;
+}
+.onboardBtn{
+  padding:var(--space-md) var(--space-2xl);
+  background:var(--color-accent);color:#fff;
+  font-size:var(--text-md);font-weight:600;
+  border-radius:var(--radius-full);
+  box-shadow:0 4px 14px rgba(212,145,92,.3);
+}
+.onboardBtn:active{opacity:.85}

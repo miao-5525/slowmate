@@ -1,0 +1,17 @@
+{
+  "name": "慢慢来 - 数字生活陪练",
+  "short_name": "慢慢来",
+  "description": "帮助中老年人安全轻松学习数字生活",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#FFF8F0",
+  "theme_color": "#FF8C42",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐢</text></svg>",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

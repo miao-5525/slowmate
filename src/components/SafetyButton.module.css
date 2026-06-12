@@ -1,0 +1,43 @@
+.floatBtn{
+  position:fixed;bottom:calc(var(--nav-height) + 28px);right:16px;
+  width:46px;height:46px;border-radius:50%;
+  background:var(--color-surface);border:1.5px solid var(--color-border-strong);
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:var(--shadow-sm);z-index:150;
+  transition:transform .2s var(--ease-spring);
+}
+.floatBtn:active{transform:scale(.88)}
+
+.overlay{
+  position:fixed;inset:0;background:rgba(0,0,0,.25);
+  backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);
+  display:flex;align-items:flex-end;justify-content:center;z-index:300;
+  animation:fadeIn .2s ease;
+}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+
+.sheet{
+  background:var(--color-surface);border-radius:var(--radius-xl) var(--radius-xl) 0 0;
+  padding:var(--space-xl);width:100%;max-width:480px;
+  animation:slideUp .3s var(--ease);
+}
+@keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+
+.sheetTitle{font-size:var(--text-xl);font-weight:600;text-align:center;margin-bottom:4px;color:var(--color-ink)}
+.sheetHint{font-size:var(--text-xs);color:var(--color-ink-secondary);text-align:center;margin-bottom:var(--space-xl)}
+
+.numberList{display:flex;flex-direction:column;gap:var(--space-sm);margin-bottom:var(--space-lg)}
+.numberBtn{
+  display:flex;align-items:center;gap:var(--space-md);padding:var(--space-lg);
+  background:var(--color-bg);border-radius:var(--radius-md);
+  border:1px solid var(--color-border);transition:background .15s;
+}
+.numberBtn:active{background:var(--color-red-light)}
+
+.numIcon{width:44px;height:44px;display:flex;align-items:center;justify-content:center;background:var(--color-surface);border-radius:var(--radius-sm);border:1px solid var(--color-border)}
+.numInfo{flex:1;text-align:left}
+.numLabel{font-size:var(--text-md);font-weight:600;color:var(--color-ink)}
+.numValue{font-size:var(--text-xs);color:var(--color-ink-tertiary)}
+
+.closeBtn{display:block;width:100%;padding:var(--space-md);background:var(--color-border);border-radius:var(--radius-md);font-size:var(--text-md);font-weight:600;color:var(--color-ink-secondary)}
+.closeBtn:active{background:var(--color-border-strong)}
