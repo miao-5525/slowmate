@@ -85,7 +85,7 @@ html,body{
   max-width:480px;
   margin:0 auto;
   position:relative;
-  overflow:hidden;
+  overflow:visible;
   background:var(--color-bg);
   box-shadow:0 0 80px rgba(0,0,0,.06);
 }
