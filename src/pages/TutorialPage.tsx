@@ -205,7 +205,7 @@ export default function TutorialPage() {
                         {step.tip && <div className={styles.stepTip}>💡 {step.tip}</div>}
                         {step.warning && <div className={styles.stepWarning}>⚠️ {step.warning}</div>}
                       </div>
-                      <StepMockup data={step.mockup} />
+                      <div className={styles.cardMockup}><StepMockup data={step.mockup} /></div>
                     </div>
                   </div>
                 )}
