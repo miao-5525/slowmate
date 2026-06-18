@@ -592,6 +592,234 @@ export const TASKS: Task[] = [
     ],
     systemPrompt: `${SYS}\n\n教老人拍照分享。提醒：发照片前检查有没有拍到隐私信息。`,
   },
+
+  // ==================== 9. 健康码/电子医保 ====================
+  {
+    id: 'yibao', title: '电子医保', description: '用手机出示医保码和健康码',
+    icon: 'heart', iconBg: '#F9F0EF', category: 'health',
+    steps: [
+      {
+        title: '打开支付宝，搜"医保"',
+        detail: '打开支付宝，点顶部搜索框，输入"电子医保"或"医保码"，点第一个结果。',
+        tip: '微信也能搜"我的医保"，两个平台都行。',
+        mockup: {
+          appName: '支付宝', highlightLabel: '搜索电子医保',
+          elements: [
+            { type: 'input', placeholder: '🔍 电子医保' },
+            { type: 'card', title: '🏥 电子医保码', subtitle: '国家医保局 · 官方服务' },
+            { type: 'card', title: '💊 医保查询', subtitle: '个人账户余额、消费明细' },
+          ],
+        },
+      },
+      {
+        title: '激活医保电子凭证',
+        detail: '第一次用需要激活：点"同意协议并激活"→ 刷脸验证 → 设置密码。以后就不用再激活了。',
+        tip: '刷脸时摘掉帽子眼镜，光线好一点，1秒就过。',
+        warning: '只在官方渠道激活医保码，别扫不明二维码。',
+        mockup: {
+          appName: '医保电子凭证', highlightLabel: '点激活，刷脸',
+          elements: [
+            { type: 'text', text: '首次使用需激活', size: 'md' },
+            { type: 'button', label: '同意协议并激活', color: 'blue', primary: true },
+            { type: 'text', text: '已阅读《用户服务协议》', size: 'sm' },
+          ],
+        },
+      },
+      {
+        title: '就医时出示医保码',
+        detail: '去医院挂号或交费时，打开支付宝 → 搜索"医保码" → 点二维码图标 → 给工作人员扫一下就行。',
+        tip: '把医保码添加到手机桌面，下次不用搜，直接点。',
+        mockup: {
+          appName: '医保码', highlightLabel: '给工作人员扫这个码',
+          elements: [
+            { type: 'text', text: '┌─────────────────┐', size: 'sm' },
+            { type: 'text', text: '│   ██ ██ ██ ██  │', size: 'md' },
+            { type: 'text', text: '│   ██ ██ ██ ██  │', size: 'md' },
+            { type: 'text', text: '└─────────────────┘', size: 'sm' },
+            { type: 'text', text: '张** · 社会保障卡', size: 'sm' },
+            { type: 'button', label: '添加到桌面', color: 'blue' },
+          ],
+        },
+      },
+    ],
+    systemPrompt: `${SYS}\n\n教老人使用电子医保码。提醒：只在官方渠道激活。`,
+  },
+  {
+    id: 'yanglao', title: '养老认证', description: '社保App刷脸认证、养老金查询',
+    icon: 'user', iconBg: '#EBF2EC', category: 'health',
+    steps: [
+      {
+        title: '下载"掌上12333"App',
+        detail: '在手机应用商店搜"掌上12333"（人社部官方App），下载安装。',
+        tip: '或搜本地社保App也行，比如"XX人社"、"XX社保"。',
+        warning: '只在官方应用商店下载，别从短信链接里下。',
+        mockup: {
+          appName: '应用商店', highlightLabel: '搜官方App',
+          elements: [
+            { type: 'input', placeholder: '🔍 掌上12333' },
+            { type: 'card', title: '掌上12333', subtitle: '人力资源和社会保障部 · 官方' },
+            { type: 'button', label: '下载', color: 'blue' },
+          ],
+        },
+      },
+      {
+        title: '注册并登录',
+        detail: '打开App，用身份证号和手机号注册。需要人脸识别验证身份。',
+        tip: '刷脸时正对手机，光线充足，按提示眨眼或张嘴。',
+        warning: '认证完全免费！任何要求交费的都是骗子。',
+        mockup: {
+          appName: '掌上12333', highlightLabel: '输入身份证号注册',
+          elements: [
+            { type: 'input', placeholder: '请输入身份证号码' },
+            { type: 'input', placeholder: '请输入手机号' },
+            { type: 'button', label: '下一步（人脸识别）', color: 'blue', primary: true },
+          ],
+        },
+      },
+      {
+        title: '进行养老待遇认证',
+        detail: '登录后，首页点"社会保险待遇资格认证"→ 按提示刷脸 → 显示"认证成功"就完成了。每年认证一次即可。',
+        tip: '如果家里老人不方便刷脸，子女可用自己的手机帮老人"代认证"。',
+        mockup: {
+          appName: '掌上12333', highlightLabel: '点这里开始认证',
+          elements: [
+            { type: 'card', title: '📋 社保待遇资格认证', subtitle: '每年认证一次' },
+            { type: 'card', title: '💰 养老金查询', subtitle: '查看发放记录' },
+            { type: 'button', label: '开始认证', color: 'blue', primary: true },
+          ],
+        },
+      },
+      {
+        title: '查询养老金',
+        detail: '认证成功后回到首页，点"养老金查询"可以看每月发了多少钱、什么时候到账。',
+        tip: '每月15号左右发养老金，可以设置日历提醒。',
+        mockup: {
+          appName: '养老金查询', highlightLabel: '',
+          elements: [
+            { type: 'card', title: '2024年6月', subtitle: '发放 ¥2,850.00 · 6月15日到账' },
+            { type: 'card', title: '2024年5月', subtitle: '发放 ¥2,850.00 · 5月15日到账' },
+          ],
+        },
+      },
+    ],
+    systemPrompt: `${SYS}\n\n教老人养老认证和养老金查询。强调完全免费，任何收费都是骗子。`,
+  },
+  {
+    id: 'tuangou', title: '社区团购', description: '拼多多买菜、美团优选自提',
+    icon: 'shopping-bag', iconBg: '#EEF3F7', category: 'life',
+    steps: [
+      {
+        title: '打开拼多多或美团',
+        detail: '拼多多点底部"多多买菜"；美团点"美团优选"。两个都可以买菜，价格差不多。',
+        tip: '第一次用会送优惠券，记得领。',
+        mockup: {
+          appName: '拼多多', highlightLabel: '点多多买菜',
+          elements: [
+            { type: 'icon-grid', icons: [
+              { icon: '🥬', label: '多多买菜' }, { icon: '💰', label: '限时秒杀' },
+              { icon: '🎮', label: '多多果园' }, { icon: '📦', label: '我的订单' },
+            ] },
+          ],
+        },
+      },
+      {
+        title: '选商品加入购物车',
+        detail: '浏览水果蔬菜粮油，看到想要的点"+"加入购物车。满一定金额才能下单（通常满15元）。',
+        tip: '早10点和晚6点有特价秒杀，价格更低。',
+        mockup: {
+          appName: '多多买菜', highlightLabel: '点+号加入购物车',
+          elements: [
+            { type: 'card', title: '🍎 红富士苹果 3斤', subtitle: '¥9.99  +  1  -' },
+            { type: 'card', title: '🥬 大白菜 1颗', subtitle: '¥2.50  +  1  -' },
+            { type: 'card', title: '🥚 鸡蛋 30枚', subtitle: '¥19.90  +  1  -' },
+          ],
+        },
+      },
+      {
+        title: '选择自提点',
+        detail: '点底部"去结算"→ 系统会显示离你最近的自提点（通常是小卖部、便利店），选一个方便的。',
+        tip: '选离家近的，散步顺便拿菜。自提点一般保留到第二天下午。',
+        mockup: {
+          appName: '选择自提点', highlightLabel: '选最近的自提点',
+          elements: [
+            { type: 'card', title: '📍 XX便利店', subtitle: '距你120m · 营业 8:00-22:00' },
+            { type: 'card', title: '📍 XX超市', subtitle: '距你350m · 营业 7:00-23:00' },
+          ],
+        },
+      },
+      {
+        title: '下单支付、次日自提',
+        detail: '确认商品和金额，点"提交订单"支付。第二天下午4点后去自提点取货，报手机尾号就行。',
+        tip: '第二天会收到取货提醒短信，拿手机尾号后4位去取。',
+        mockup: {
+          appName: '确认订单', highlightLabel: '核对后支付',
+          elements: [
+            { type: 'card', title: '共3件 · ¥32.39', subtitle: '自提点：XX便利店' },
+            { type: 'text', text: '预计明天下午4点后可取货', size: 'sm' },
+            { type: 'button', label: '提交订单 · ¥32.39', color: 'orange', primary: true },
+          ],
+        },
+      },
+    ],
+    systemPrompt: `${SYS}\n\n教老人用拼多多或美团买菜自提。提醒：第一次用不知道自提点在哪可以问家人。`,
+  },
+  {
+    id: 'yuyin', title: '语音助手', description: '用Siri/小爱同学语音操作手机',
+    icon: 'mic', iconBg: '#EEF3F7', category: 'basics',
+    steps: [
+      {
+        title: '唤醒语音助手',
+        detail: 'iPhone：长按右侧按钮。安卓：长按Home键或说"嘿Siri""小爱同学"。',
+        tip: '在设置里打开"语音唤醒"，以后叫一声就行，不用按键。',
+        mockup: {
+          appName: '语音助手', highlightLabel: '长按或喊一声',
+          elements: [
+            { type: 'text', text: '🎤 "嘿 Siri…"', size: 'md' },
+            { type: 'text', text: '或者长按右侧按钮', size: 'sm' },
+            { type: 'text', text: '●●●●●●●（正在听你说话）', size: 'sm' },
+          ],
+        },
+      },
+      {
+        title: '常用口语指令',
+        detail: '直接说话就行，不用打字。试试这些："今天天气怎么样""打电话给女儿""打开微信""提醒我下午3点吃药""10分钟后闹钟"。',
+        tip: '说得越具体越好。比如"打电话给女儿"而不是"打电话"。',
+        mockup: {
+          appName: 'Siri', highlightLabel: '直接说你想做什么',
+          elements: [
+            { type: 'list', items: ['☁️ 今天天气怎么样？', '📞 打电话给女儿', '⏰ 下午3点提醒我吃药', '💬 打开微信', '🔍 帮我搜红烧肉怎么做'] },
+          ],
+        },
+      },
+      {
+        title: '让语音助手帮忙设置提醒',
+        detail: '比如喊"提醒我每天下午3点吃药"，手机会自动到时间弹出提醒。比手动输入方便很多。',
+        tip: '可以设置重复提醒，比如"每天早上8点提醒我量血压"。',
+        mockup: {
+          appName: '提醒事项', highlightLabel: '',
+          elements: [
+            { type: 'card', title: '✅ 下午3点：吃药', subtitle: '每天重复' },
+            { type: 'card', title: '✅ 早上8点：量血压', subtitle: '每天重复' },
+            { type: 'text', text: 'Siri 已帮你设置好了！', size: 'sm' },
+          ],
+        },
+      },
+      {
+        title: '让语音助手朗读和导航',
+        detail: '说"帮我导航到XX医院"，手机自动打开地图导航。说"读一下最近的消息"，手机帮你读微信消息。',
+        tip: '开车或走路时用语音特别安全，不用看手机。',
+        warning: '不要在人多的地方大声说密码、银行卡号等敏感信息。',
+        mockup: {
+          appName: '地图', highlightLabel: '',
+          elements: [
+            { type: 'card', title: '📍 导航到 XX市人民医院', subtitle: '驾车约12分钟 · 3.2公里' },
+            { type: 'button', label: '开始导航', color: 'green', primary: true },
+          ],
+        },
+      },
+    ],
+    systemPrompt: `${SYS}\n\n教老人使用手机语音助手。鼓励老人多尝试语音操作。`,
+  },
 ];
 
 export const CATEGORY_LABELS: Record<string, string> = {

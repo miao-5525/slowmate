@@ -199,6 +199,16 @@ export default function TutorialPage() {
                 </div>
                 {open && (
                   <div className={styles.cardBody}>
+                    {step.videoUrl && (
+                      <div className={styles.cardVideo}>
+                        <iframe
+                          src={step.videoUrl}
+                          allow="autoplay; encrypted-media; picture-in-picture"
+                          allowFullScreen
+                          title="操作演示视频"
+                        />
+                      </div>
+                    )}
                     <div className={styles.cardContent}>
                       <div className={styles.cardText}>
                         <div className={styles.stepDetail}>{step.detail}</div>

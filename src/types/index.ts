@@ -29,6 +29,7 @@ export interface TaskStep {
   tip?: string;
   warning?: string;
   mockup: StepMockup;
+  videoUrl?: string; // Bilibili 或 MP4 视频链接
 }
 
 /** 数字生活任务 */
