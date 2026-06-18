@@ -15,6 +15,7 @@ export const TASKS: Task[] = [
         detail: '打开微信，点顶部的 🔍 搜索框，输入医院名字，找到后点「关注」。',
         tip: '正规医院公众号名字旁有蓝色 ✓ 认证标志。',
         warning: '不要关注名字奇怪的公众号，可能是假的。',
+        videoUrl: '//player.bilibili.com/player.html?bvid=BV1Wt4tekEsP',
         mockup: {
           appName: '微信', highlightLabel: '点搜索框，输入医院名',
           elements: [
@@ -329,6 +330,7 @@ export const TASKS: Task[] = [
         title: '打开微信，找到联系人',
         detail: '打开微信 → 点底部「通讯录」→ 找到想通话的人。',
         tip: '常联系的人可以长按名字选「置顶聊天」，以后就在最上面了。',
+        videoUrl: '//player.bilibili.com/player.html?bvid=BV11b411b7kk',
         mockup: {
           appName: '微信 · 通讯录', highlightLabel: '找到你想通话的人',
           elements: [
@@ -394,6 +396,7 @@ export const TASKS: Task[] = [
         detail: '骗子常冒充客服、公检法、亲戚，说「退款」「中奖」「涉嫌犯罪」「急用钱」。',
         tip: '记住：天上不会掉馅饼。让你转账、给验证码的，先问家人！',
         warning: '真警察、真法院绝不会打电话让你转账或下载不明App。',
+        videoUrl: '//player.bilibili.com/player.html?bvid=BV11b411b7kk',
         mockup: {
           appName: '防骗知识', highlightLabel: '',
           elements: [
@@ -472,6 +475,7 @@ export const TASKS: Task[] = [
         detail: '打开「设置」→「WLAN」→ 找到你家WiFi名字 → 输入密码 → 点「连接」。',
         tip: '密码在路由器底部贴纸上。区分大小写。',
         warning: '别连商场里没密码的免费WiFi，可能不安全。',
+        videoUrl: '//player.bilibili.com/player.html?bvid=BV11b411b7kk',
         mockup: {
           appName: '设置 · WLAN', highlightLabel: '点你家WiFi',
           elements: [

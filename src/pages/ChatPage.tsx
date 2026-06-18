@@ -175,7 +175,7 @@ export default function ChatPage() {
 
       {/* Input */}
       <div className={styles.inputBar}>
-        <input ref={fileRef} type="file" accept="image/*" capture="environment" onChange={handleImageChange} style={{ display: 'none' }} />
+        <input ref={fileRef} type="file" accept="image/*" onChange={handleImageChange} style={{ display: 'none' }} />
         <button className={styles.uploadBtn} onClick={handleImagePick} title="上传截图">
           <Icon name="camera" size={22} color="var(--color-ink-tertiary)" />
         </button>
