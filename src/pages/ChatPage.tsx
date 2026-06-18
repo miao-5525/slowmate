@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useCallback } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useChat } from '../hooks/useChat';
 import { useProgress } from '../hooks/useProgress';
@@ -28,16 +28,16 @@ export default function ChatPage() {
 
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
-  const [voiceMode, setVoiceMode] = useState(false);        // 语音对话模式
-  const [screenMode, setScreenMode] = useState(false);      // 屏幕识别模式
+  const [voiceMode, setVoiceMode] = useState(false);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);  // base64 图片预览
+  const fileRef = useRef<HTMLInputElement>(null);
   const endRef = useRef<HTMLDivElement>(null);
   const lastAIRef = useRef('');
 
   useEffect(() => { if (taskId) startTask(taskId) }, [taskId, startTask]);
   useEffect(() => { if (transcript) setInput(transcript) }, [transcript]);
-  useEffect(() => { endRef.current?.scrollIntoView({ behavior: 'smooth' }) }, [messages, loading]);
+  useEffect(() => { endRef.current?.scrollIntoView({ behavior: 'smooth' }) }, [messages, loading, imagePreview]);
 
-  // When voice mode is on, auto-read AI responses
   useEffect(() => {
     if (voiceMode && lastAIRef.current && tts.supported) {
       tts.speak(lastAIRef.current);
@@ -45,7 +45,6 @@ export default function ChatPage() {
     }
   }, [messages, voiceMode, tts]);
 
-  // Continuous conversation: when TTS finishes, auto-listen
   useEffect(() => {
     if (voiceMode && !tts.isSpeaking && !tts.isPaused && messages.length > 0) {
       const last = messages[messages.length - 1];
@@ -56,9 +55,50 @@ export default function ChatPage() {
     }
   }, [tts.isSpeaking, loading, voiceMode, messages]);
 
+  // 图片上传
+  const handleImagePick = () => fileRef.current?.click();
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => setImagePreview(reader.result as string);
+    reader.readAsDataURL(file);
+    e.target.value = ''; // reset so same file can be re-selected
+  };
+
+  const removeImage = () => setImagePreview(null);
+
   const send = async (text?: string) => {
     const msg = (text ?? input).trim();
-    if (!msg || loading) return;
+    const hasImage = !!imagePreview;
+    if ((!msg && !hasImage) || loading) return;
+
+    if (hasImage) {
+      // 图片消息：显示图片 + 演示回复
+      addMessage('user', msg || '帮我看看这张截图');
+      setImagePreview(null);
+      setInput('');
+      setLoading(true);
+
+      setTimeout(() => {
+        addMessage('assistant',
+          '📸 收到你的截图啦！\n\n' +
+          '要识别屏幕上的内容，需要接入一个支持「视觉识别」的 AI（比如 Claude）。\n\n' +
+          '目前你配的 DeepSeek 只能读文字，暂时还看不懂图片。\n\n' +
+          '💡 不过别急——你可以先用文字描述一下屏幕上有什么，我会一步一步帮你！\n\n' +
+          '比如告诉我：\n' +
+          '• 你现在用的是什么 App？\n' +
+          '• 屏幕上最上面写的什么标题？\n' +
+          '• 你看到什么颜色的按钮？上面写了什么字？'
+        );
+        setLoading(false);
+      }, 1000);
+      return;
+    }
+
+    // 纯文字消息
+    if (!msg) return;
     addMessage('user', msg);
     setInput(''); setLoading(true);
     try {
@@ -76,35 +116,11 @@ export default function ChatPage() {
     } finally { setLoading(false) }
   };
 
-  const handleVoice = () => {
-    if (listening) {
-      vStop();
-    } else {
-      vStart();
-    }
-  };
+  const handleVoice = () => listening ? vStop() : vStart();
 
   const toggleVoiceMode = () => {
-    if (voiceMode) {
-      tts.stop();
-      if (listening) vStop();
-    }
+    if (voiceMode) { tts.stop(); if (listening) vStop(); }
     setVoiceMode(!voiceMode);
-  };
-
-  // Screen recognition: send a guided prompt
-  const startScreenRecognition = () => {
-    const prompt = `📸 我现在需要你帮我看看手机屏幕，告诉我接下来该点哪里。
-
-请你先问我以下几个问题（每次只问一个）：
-1. 你现在用的是什么App？（微信、支付宝、还是别的？）
-2. 屏幕上最上面写的什么标题？
-3. 屏幕中间有什么按钮？按钮是什么颜色的？上面写的什么字？
-4. 屏幕下方有什么？
-
-根据我的描述，一步步告诉我要点哪里。`;
-    send(prompt);
-    setScreenMode(true);
   };
 
   return (
@@ -114,28 +130,14 @@ export default function ChatPage() {
         <button className={styles.backBtn} onClick={() => nav(-1)}><Icon name="arrow-left" size={22} /></button>
         <div className={styles.headerTitle}>{task ? task.title : '自由陪练'}</div>
         <div className={styles.headerActions}>
-          {/* Voice mode toggle */}
           {tts.supported && (
-            <button
-              className={`${styles.headerBtn} ${voiceMode ? styles.headerBtnActive : ''}`}
-              onClick={toggleVoiceMode}
-              title={voiceMode ? '关闭语音对话' : '开启语音对话'}
-            >
+            <button className={`${styles.headerBtn} ${voiceMode ? styles.headerBtnActive : ''}`} onClick={toggleVoiceMode} title={voiceMode ? '关闭语音' : '语音对话'}>
               <Icon name="mic" size={20} color={voiceMode ? '#fff' : 'var(--color-ink-tertiary)'} />
             </button>
           )}
-          {/* Screen recognition */}
-          <button
-            className={`${styles.headerBtn} ${screenMode ? styles.headerBtnActive : ''}`}
-            onClick={startScreenRecognition}
-            title="截屏识别"
-          >
-            <Icon name="camera" size={20} color={screenMode ? '#fff' : 'var(--color-ink-tertiary)'} />
-          </button>
         </div>
       </div>
 
-      {/* Voice mode indicator */}
       {voiceMode && (
         <div className={styles.voiceBanner}>
           <span className={styles.voiceDot} />
@@ -146,21 +148,13 @@ export default function ChatPage() {
 
       {/* Messages */}
       <div className={styles.msgList}>
-        {messages.length === 0 && (
+        {messages.length === 0 && !imagePreview && (
           <div className={styles.empty}>
             <div className={styles.emptyIcon}><Icon name="message-circle" size={44} color="var(--color-accent)" /></div>
             <div className={styles.emptyTitle}>{task ? `来练「${task.title}」吧！` : '有什么想学的？'}</div>
             <div className={styles.emptyHint}>
-              {task
-                ? '我会一步一步陪着您练，慢慢来～'
-                : '告诉我您想做啥\n我会一步一步教您'}
+              {task ? '我会一步一步陪着您练，慢慢来～' : '告诉我您想做啥\n我会一步一步教您'}
             </div>
-
-            {/* Screen recognition entry */}
-            <button className={`${styles.quickQ} ${styles.screenQ}`} onClick={startScreenRecognition}>
-              📸 截屏识别 — 告诉AI你屏幕上有什么
-            </button>
-
             <div className={styles.quickQs}>
               {QUICK.map(q => <button key={q} className={styles.quickQ} onClick={() => send(q)}>{q}</button>)}
             </div>
@@ -171,25 +165,34 @@ export default function ChatPage() {
         <div ref={endRef} />
       </div>
 
+      {/* Image preview */}
+      {imagePreview && (
+        <div className={styles.imgPreview}>
+          <img src={imagePreview} alt="截图预览" className={styles.imgPreviewImg} />
+          <button className={styles.imgRemove} onClick={removeImage}>✕</button>
+        </div>
+      )}
+
       {/* Input */}
       <div className={styles.inputBar}>
+        <input ref={fileRef} type="file" accept="image/*" capture="environment" onChange={handleImageChange} style={{ display: 'none' }} />
+        <button className={styles.uploadBtn} onClick={handleImagePick} title="上传截图">
+          <Icon name="camera" size={22} color="var(--color-ink-tertiary)" />
+        </button>
         {voiceOk && (
-          <button
-            className={`${styles.voiceBtn} ${listening ? styles.voiceActive : ''} ${voiceMode ? styles.voiceBtnBig : ''}`}
-            onClick={handleVoice}
-          >
+          <button className={`${styles.voiceBtn} ${listening ? styles.voiceActive : ''} ${voiceMode ? styles.voiceBtnBig : ''}`} onClick={handleVoice}>
             <Icon name="mic" size={voiceMode ? 26 : 22} color={listening ? 'var(--color-red)' : voiceMode ? 'var(--color-accent)' : 'var(--color-ink-tertiary)'} />
           </button>
         )}
         <textarea
           className={styles.textInput}
-          placeholder={listening ? '正在听您说话…' : voiceMode ? '语音模式 — 直接说话' : '打字告诉我你想学什么…'}
+          placeholder={imagePreview ? '添加文字描述（可选）…' : listening ? '正在听您说话…' : voiceMode ? '语音模式 — 直接说话' : '打字告诉我你想学什么…'}
           value={input}
           onChange={e => setInput(e.target.value)}
           onKeyDown={e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send() } }}
           rows={1}
         />
-        <button className={styles.sendBtn} onClick={() => send()} disabled={!input.trim() || loading}>
+        <button className={styles.sendBtn} onClick={() => send()} disabled={(!input.trim() && !imagePreview) || loading}>
           <Icon name="send" size={20} color="#fff" />
         </button>
       </div>
