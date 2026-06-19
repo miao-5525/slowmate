@@ -13,7 +13,7 @@ export function useProgress() {
   /** 开始学习某个任务 */
   const startTask = useCallback(
     (taskId: string) => {
-      const task = TASKS.find((t) => t.id === taskId);
+      const task = TASKS.find((t) => t.id === taskId) || state.customTasks.find(t => t.id === taskId);
       if (!task) return;
 
       dispatch({
@@ -22,10 +22,11 @@ export function useProgress() {
         progress: {
           status: 'in_progress',
           lastChatAt: Date.now(),
+          totalSteps: task.steps.length,
         },
       });
     },
-    [dispatch],
+    [dispatch, state.customTasks],
   );
 
   /** 完成某个步骤 */

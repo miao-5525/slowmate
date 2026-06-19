@@ -15,7 +15,6 @@ export const TASKS: Task[] = [
         detail: '打开微信，点顶部的 🔍 搜索框，输入医院名字，找到后点「关注」。',
         tip: '正规医院公众号名字旁有蓝色 ✓ 认证标志。',
         warning: '不要关注名字奇怪的公众号，可能是假的。',
-        videoUrl: '//player.bilibili.com/player.html?bvid=BV1Wt4tekEsP',
         mockup: {
           appName: '微信', highlightLabel: '点搜索框，输入医院名',
           elements: [
@@ -823,6 +822,102 @@ export const TASKS: Task[] = [
       },
     ],
     systemPrompt: `${SYS}\n\n教老人使用手机语音助手。鼓励老人多尝试语音操作。`,
+  },
+
+  // ==================== 13. 社交媒体运营（高级） ====================
+  {
+    id: 'shejiao', title: '社交媒体', description: '发抖音、写公众号、快手直播',
+    icon: 'zap', iconBg: '#FBF5EA', category: 'social', premium: true,
+    steps: [
+      {
+        title: '注册抖音账号',
+        detail: '下载抖音App → 用手机号注册 → 设置头像和昵称。',
+        tip: '昵称可以用真名或喜欢的名字，头像用自己照片更亲切。',
+        mockup: {
+          appName: '抖音', highlightLabel: '手机号注册',
+          elements: [
+            { type: 'input', placeholder: '请输入手机号' },
+            { type: 'button', label: '获取验证码', color: 'blue' },
+            { type: 'button', label: '注册/登录', color: 'green', primary: true },
+          ],
+        },
+      },
+      {
+        title: '拍第一条抖音',
+        detail: '点底部 + 号 → 选"拍摄"→ 按住红色按钮拍 → 松手就拍好了。配一段音乐，写一句话，点"发布"。',
+        tip: '可以先拍个15秒的短视频试试，比如拍家里的花或宠物。',
+        mockup: {
+          appName: '抖音拍摄', highlightLabel: '长按红色按钮拍摄',
+          elements: [
+            { type: 'text', text: '🎵 选择音乐：春暖花开', size: 'sm' },
+            { type: 'icon-grid', icons: [{ icon:'🎬',label:'拍摄'},{ icon:'📷',label:'照片'},{ icon:'📹',label:'直播'}] },
+            { type: 'button', label: '🔴 长按拍摄', color: 'green', primary: true },
+          ],
+        },
+      },
+      {
+        title: '发布和互动',
+        detail: '拍好后写标题、加话题标签（如 #退休生活），点"发布"。有人点赞评论就回复他们。',
+        tip: '每天看看同城视频，给朋友点赞，互动越多粉丝越多。',
+        warning: '不要泄露家庭地址、银行卡等隐私信息。谨慎添加陌生人为好友。',
+        mockup: {
+          appName: '发布视频', highlightLabel: '写标题，点发布',
+          elements: [
+            { type: 'input', placeholder: '写一个吸引人的标题…' },
+            { type: 'text', text: '#退休生活 #养花日记', size: 'sm' },
+            { type: 'button', label: '发布', color: 'green', primary: true },
+          ],
+        },
+      },
+    ],
+    systemPrompt: `${SYS}\n\n教老人使用抖音发布短视频。提醒保护隐私，不泄露个人信息。`,
+  },
+  {
+    id: 'yangsheng', title: '线上养生', description: '学太极、八段锦、冥想',
+    icon: 'heart', iconBg: '#EBF2EC', category: 'health', premium: true,
+    steps: [
+      {
+        title: '找太极教学视频',
+        detail: '打开B站或抖音 → 搜索"太极入门 中老年"→ 找点赞多的跟着学。',
+        tip: '收藏喜欢的视频，下次从"我的收藏"直接打开。',
+        mockup: {
+          appName: 'B站', highlightLabel: '搜索太极入门',
+          elements: [
+            { type: 'input', placeholder: '🔍 太极入门 中老年' },
+            { type: 'card', title: '🎬 24式简化太极拳 全套教学', subtitle: '王教练 · 126万播放 · 收藏 ⭐' },
+            { type: 'card', title: '🎬 八段锦 完整版 镜面教学', subtitle: '李老师 · 89万播放' },
+          ],
+        },
+      },
+      {
+        title: '每天跟练15分钟',
+        detail: '找一个喜欢的视频 → 手机放在前方 → 跟着视频里的动作慢慢做。',
+        tip: '不用追求标准，动起来就是好事。每天15分钟就够。',
+        mockup: {
+          appName: '视频播放', highlightLabel: '跟着视频做动作',
+          elements: [
+            { type: 'text', text: '🎬 24式太极拳 · 15:32', size: 'md' },
+            { type: 'text', text: '▶ 正在播放', size: 'sm' },
+            { type: 'icon-grid', icons: [{ icon:'⏪',label:'后退'},{ icon:'▶',label:'暂停'},{ icon:'⏩',label:'前进'}] },
+          ],
+        },
+      },
+      {
+        title: '加入养生社群',
+        detail: '在微信或抖音加"养生打卡群"→ 每天打卡记录 → 和群友互相鼓励。',
+        tip: '找志同道合的朋友一起练，更有动力。',
+        warning: '养生群只交流锻炼，别买群友推荐的保健品或理财产品。',
+        mockup: {
+          appName: '养生打卡群', highlightLabel: '每天打卡',
+          elements: [
+            { type: 'card', title: '👥 快乐养生群 · 128人', subtitle: '今日已打卡 86 人' },
+            { type: 'list', items: ['🏃 老王：太极30分钟 ✓','🧘 李姐：八段锦15分钟 ✓','🌿 张叔：散步60分钟 ✓'] },
+            { type: 'button', label: '我也打卡', color: 'green', primary: true },
+          ],
+        },
+      },
+    ],
+    systemPrompt: `${SYS}\n\n教老人线上养生锻炼。提醒不买群友推荐的保健品。`,
   },
 ];
 

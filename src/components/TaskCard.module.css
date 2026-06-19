@@ -28,3 +28,6 @@
 .statusPending{background:var(--color-border);color:var(--color-ink-tertiary)}
 .statusActive{background:var(--color-amber-light);color:var(--color-amber)}
 .statusDone{background:var(--color-green-light);color:var(--color-green)}
+.cardLocked{opacity:.55}
+.premiumTag{font-size:13px;margin-left:4px}
+.customTag{font-size:11px;margin-left:6px;padding:1px 8px;border-radius:var(--radius-full);background:var(--color-accent-soft);color:var(--color-accent);font-weight:600}

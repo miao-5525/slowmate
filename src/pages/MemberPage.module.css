@@ -1,0 +1,38 @@
+.page{padding:var(--space-lg);padding-bottom:var(--space-2xl)}
+.backBtn{display:inline-flex;align-items:center;gap:var(--space-xs);color:var(--color-accent);font-size:var(--text-sm);margin-bottom:var(--space-lg)}
+.backBtn:active{opacity:.7}
+
+.header{text-align:center;margin-bottom:var(--space-xl)}
+.headerIcon{font-size:56px;margin-bottom:var(--space-sm)}
+.headerTitle{font-size:var(--text-2xl);font-weight:700;color:var(--color-ink)}
+.headerDesc{font-size:var(--text-sm);color:var(--color-ink-secondary);margin-top:var(--space-xs)}
+
+.plans{display:flex;flex-direction:column;gap:var(--space-lg)}
+.planCard{background:var(--color-surface);border-radius:var(--radius-xl);padding:var(--space-xl);border:2px solid var(--color-border);text-align:center}
+.planCardCurrent{border-color:var(--color-green);background:var(--color-green-light)}
+.planCardPremium{border-color:var(--color-amber);background:var(--color-accent-soft)}
+
+.planName{font-size:var(--text-xl);font-weight:700;color:var(--color-ink);margin-bottom:4px}
+.planPrice{font-size:var(--text-2xl);font-weight:700;color:var(--color-accent);margin-bottom:var(--space-lg)}
+.planPriceFree{color:var(--color-green)}
+.featureList{text-align:left;display:flex;flex-direction:column;gap:var(--space-sm);margin-bottom:var(--space-lg)}
+.feature{display:flex;align-items:center;gap:var(--space-sm);font-size:var(--text-sm);color:var(--color-ink)}
+.featureCheck{color:var(--color-green);font-weight:700}
+.featureLock{color:var(--color-ink-tertiary)}
+
+.planBtn{display:block;width:100%;padding:var(--space-md);border-radius:var(--radius-full);font-size:var(--text-md);font-weight:600}
+.planBtnCurrent{background:var(--color-green);color:#fff;opacity:.6}
+.planBtnUpgrade{background:linear-gradient(135deg,var(--color-amber),var(--color-accent));color:#fff;box-shadow:0 4px 20px rgba(212,145,92,.35)}
+.planBtnUpgrade:active{opacity:.85}
+
+.note{text-align:center;font-size:var(--text-xs);color:var(--color-ink-tertiary);margin-top:var(--space-lg);line-height:1.6}
+
+/* Modal */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.25);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;z-index:200;padding:var(--space-lg);animation:fadeIn .2s}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.modal{background:var(--color-surface);border-radius:var(--radius-xl);padding:var(--space-xl);width:100%;max-width:340px;text-align:center;box-shadow:var(--shadow-md);animation:popIn .3s}
+@keyframes popIn{from{transform:scale(.9);opacity:0}to{transform:scale(1);opacity:1}}
+.modalEmoji{font-size:56px;margin-bottom:var(--space-sm)}
+.modalTitle{font-size:var(--text-xl);font-weight:700;color:var(--color-ink);margin-bottom:var(--space-sm)}
+.modalText{font-size:var(--text-sm);color:var(--color-ink-secondary);margin-bottom:var(--space-lg);line-height:1.6}
+.modalBtn{display:inline-block;padding:var(--space-md) var(--space-2xl);background:var(--color-accent);color:#fff;font-size:var(--text-md);font-weight:600;border-radius:var(--radius-full);box-shadow:0 4px 14px rgba(212,145,92,.3)}

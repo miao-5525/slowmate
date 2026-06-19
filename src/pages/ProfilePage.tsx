@@ -92,6 +92,23 @@ export default function ProfilePage() {
         <div className={styles.statCard}><div className={styles.statNum}>{stats.inProgress}</div><div className={styles.statLabel}>学习中</div></div>
       </div>
 
+      {/* Quick actions */}
+      <div className={styles.sectionTitle}>🔧 快捷入口</div>
+      <div className={styles.quickActions}>
+        <button className={styles.quickBtn} onClick={() => nav('/help-book')}>
+          <span className={styles.quickBtnIcon}>🤝</span>
+          <span>预约帮助</span>
+        </button>
+        <button className={styles.quickBtn} onClick={() => nav('/task-builder')}>
+          <span className={styles.quickBtnIcon}>📝</span>
+          <span>定制任务</span>
+        </button>
+        <button className={styles.quickBtn} onClick={() => nav('/member')}>
+          <span className={styles.quickBtnIcon}>{state.isMember ? '💎' : '⭐'}</span>
+          <span>{state.isMember ? '会员中心' : '升级会员'}</span>
+        </button>
+      </div>
+
       {/* Achievements */}
       <div className={styles.sectionTitle}>🏅 学习成就</div>
       <div className={styles.achievements}>

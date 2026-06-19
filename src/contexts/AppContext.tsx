@@ -28,6 +28,10 @@ function createInitialState(): AppState {
     apiKey: saved?.apiKey ?? null,
     activeChatId: null,
     fontSize: saved?.fontSize ?? 'normal',
+    isMember: saved?.isMember ?? false,
+    memberExpiry: saved?.memberExpiry ?? null,
+    customTasks: saved?.customTasks ?? [],
+    helpBookingsUsed: saved?.helpBookingsUsed ?? 0,
   };
 }
 
@@ -75,6 +79,18 @@ function appReducer(state: AppState, action: AppAction): AppState {
 
     case 'SET_FONT_SIZE':
       return { ...state, fontSize: action.fontSize };
+
+    case 'SET_MEMBER':
+      return { ...state, isMember: action.isMember, memberExpiry: action.expiry };
+
+    case 'ADD_CUSTOM_TASK':
+      return { ...state, customTasks: [...state.customTasks, action.task] };
+
+    case 'REMOVE_CUSTOM_TASK':
+      return { ...state, customTasks: state.customTasks.filter(t => t.id !== action.taskId) };
+
+    case 'USE_HELP_BOOKING':
+      return { ...state, helpBookingsUsed: state.helpBookingsUsed + 1 };
 
     case 'INIT_STATE':
       return { ...state, ...action.state };

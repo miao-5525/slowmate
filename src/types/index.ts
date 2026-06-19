@@ -38,10 +38,12 @@ export interface Task {
   title: string;
   description: string;
   icon: import('../components/Icon').IconName;
-  iconBg?: string; // 图标容器背景色（tailwind级）
+  iconBg?: string;
   category: TaskCategory;
   steps: TaskStep[];
   systemPrompt: string;
+  premium?: boolean;    // 高级任务（需会员）
+  isCustom?: boolean;   // 用户自定义任务
 }
 
 /** 聊天消息 */
@@ -83,6 +85,14 @@ export interface AppState {
   activeChatId: string | null;
   /** 字号档位 */
   fontSize: FontSize;
+  /** 是否为高级会员 */
+  isMember: boolean;
+  /** 会员过期时间 */
+  memberExpiry: number | null;
+  /** 用户自定义任务 */
+  customTasks: Task[];
+  /** 线下帮助预约次数 */
+  helpBookingsUsed: number;
 }
 
 /** App Actions */
@@ -93,4 +103,8 @@ export type AppAction =
   | { type: 'SET_API_KEY'; apiKey: string }
   | { type: 'SET_ACTIVE_CHAT'; chatId: string | null }
   | { type: 'SET_FONT_SIZE'; fontSize: FontSize }
+  | { type: 'SET_MEMBER'; isMember: boolean; expiry: number | null }
+  | { type: 'ADD_CUSTOM_TASK'; task: Task }
+  | { type: 'REMOVE_CUSTOM_TASK'; taskId: string }
+  | { type: 'USE_HELP_BOOKING' }
   | { type: 'INIT_STATE'; state: Partial<AppState> };

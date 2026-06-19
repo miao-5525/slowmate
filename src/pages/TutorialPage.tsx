@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useProgress } from '../hooks/useProgress';
 import { useTTS } from '../hooks/useTTS';
+import { useAppState } from '../contexts/AppContext';
 import Icon from '../components/Icon';
 import StepMockup from '../components/StepMockup';
 import PracticeBar from '../components/PracticeBar';
@@ -14,9 +15,10 @@ export default function TutorialPage() {
   const { taskId } = useParams<{ taskId: string }>();
   const nav = useNavigate();
   const { progressMap, startTask, completeStep, completeTask } = useProgress();
+  const { state } = useAppState();
   const tts = useTTS();
 
-  const task = TASKS.find(t => t.id === taskId);
+  const task = TASKS.find(t => t.id === taskId) || state.customTasks.find(t => t.id === taskId);
   const progress = taskId ? progressMap[taskId] : null;
 
   const [openStep, setOpenStep] = useState<number | null>(0);

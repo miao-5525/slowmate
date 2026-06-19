@@ -1,0 +1,28 @@
+.page{padding:var(--space-lg);padding-bottom:var(--space-2xl)}
+.backBtn{display:inline-flex;align-items:center;gap:var(--space-xs);color:var(--color-accent);font-size:var(--text-sm);margin-bottom:var(--space-lg)}
+.backBtn:active{opacity:.7}
+.header{margin-bottom:var(--space-xl)}
+.headerTitle{font-size:var(--text-2xl);font-weight:700;color:var(--color-ink);margin-bottom:4px}
+.headerDesc{font-size:var(--text-sm);color:var(--color-ink-secondary)}
+
+.form{display:flex;flex-direction:column;gap:var(--space-md)}
+.formLabel{font-size:var(--text-sm);font-weight:600;color:var(--color-ink);margin-bottom:2px}
+.typeOptions{display:flex;gap:var(--space-sm)}
+.typeBtn{flex:1;padding:var(--space-md);border-radius:var(--radius-md);border:2px solid var(--color-border);text-align:center;font-size:var(--text-sm);font-weight:500;background:var(--color-surface);transition:all .2s}
+.typeBtnActive{border-color:var(--color-accent);background:var(--color-accent-soft);color:var(--color-accent);font-weight:600}
+.formInput{width:100%;padding:var(--space-md);border-radius:var(--radius-md);border:2px solid var(--color-border);font-size:var(--text-md);background:var(--color-surface);transition:border-color .2s}
+.formInput:focus{border-color:var(--color-accent)}
+.formTextarea{width:100%;padding:var(--space-md);border-radius:var(--radius-md);border:2px solid var(--color-border);font-size:var(--text-md);background:var(--color-surface);resize:vertical;min-height:80px}
+.formTextarea:focus{border-color:var(--color-accent)}
+.submitBtn{width:100%;padding:var(--space-md);border-radius:var(--radius-full);background:var(--color-accent);color:#fff;font-size:var(--text-md);font-weight:600;box-shadow:0 4px 14px rgba(212,145,92,.3);margin-top:var(--space-md)}
+.submitBtn:active{opacity:.85}
+.submitBtn:disabled{opacity:.5}
+
+.success{text-align:center;padding:var(--space-2xl)}
+.successIcon{font-size:64px;margin-bottom:var(--space-md)}
+.successTitle{font-size:var(--text-xl);font-weight:700;color:var(--color-ink);margin-bottom:var(--space-sm)}
+.successText{font-size:var(--text-sm);color:var(--color-ink-secondary);line-height:1.7;margin-bottom:var(--space-xl)}
+.backHome{display:inline-block;padding:var(--space-md) var(--space-2xl);background:var(--color-accent);color:#fff;font-size:var(--text-md);font-weight:600;border-radius:var(--radius-full);box-shadow:0 4px 14px rgba(212,145,92,.3)}
+
+.limitHint{text-align:center;padding:var(--space-2xl);color:var(--color-ink-tertiary)}
+.limitHintIcon{font-size:48px;margin-bottom:var(--space-sm)}

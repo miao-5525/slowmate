@@ -6,6 +6,9 @@ import TasksPage from './pages/TasksPage';
 import TutorialPage from './pages/TutorialPage';
 import ChatPage from './pages/ChatPage';
 import ProfilePage from './pages/ProfilePage';
+import MemberPage from './pages/MemberPage';
+import HelpBookPage from './pages/HelpBookPage';
+import TaskBuilderPage from './pages/TaskBuilderPage';
 import styles from './App.module.css';
 
 export default function App() {
@@ -21,6 +24,9 @@ export default function App() {
               <Route path="chat" element={<ChatPage />} />
               <Route path="chat/:taskId" element={<ChatPage />} />
               <Route path="profile" element={<ProfilePage />} />
+              <Route path="member" element={<MemberPage />} />
+              <Route path="help-book" element={<HelpBookPage />} />
+              <Route path="task-builder" element={<TaskBuilderPage />} />
             </Route>
           </Routes>
         </div>

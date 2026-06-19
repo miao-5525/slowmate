@@ -1,6 +1,4 @@
 import { NavLink, Outlet, useLocation } from 'react-router-dom';
-import { useAppState } from '../contexts/AppContext';
-import { FontSize } from '../types';
 import Icon from './Icon';
 import styles from './Layout.module.css';
 
@@ -13,15 +11,6 @@ const NAV = [
 
 export default function Layout() {
   const loc = useLocation();
-  const { state, dispatch } = useAppState();
-
-  const cycleFont = () => {
-    const c: FontSize[] = ['normal', 'large', 'xlarge'];
-    const i = c.indexOf(state.fontSize);
-    dispatch({ type: 'SET_FONT_SIZE', fontSize: c[(i + 1) % c.length] });
-  };
-
-  const sizeLabel = state.fontSize === 'normal' ? 'Aa' : state.fontSize === 'large' ? 'Aa+' : 'Aa++';
 
   return (
     <div className={styles.layout}>
@@ -46,10 +35,6 @@ export default function Layout() {
             </NavLink>
           );
         })}
-        <button className={styles.navItem} onClick={cycleFont} title="字号">
-          <span style={{ fontSize: 16, fontWeight: 600, color: 'var(--color-ink-secondary)' }}>{sizeLabel}</span>
-          <span className={styles.navLabel}>字号</span>
-        </button>
       </nav>
     </div>
   );
