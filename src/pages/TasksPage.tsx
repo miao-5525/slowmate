@@ -46,7 +46,7 @@ export default function TasksPage() {
       {Object.entries(grouped).map(([cat, tasks]) => (
         <div key={cat}>
           <div className={styles.cat}>
-            {cat === 'custom' ? '📝 自定义任务' : CATEGORY_LABELS[cat] || cat}
+            {cat === 'custom' ? '自定义任务' : CATEGORY_LABELS[cat] || cat}
           </div>
           <div className={styles.list}>
             {tasks.map(t => (

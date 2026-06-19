@@ -99,25 +99,23 @@ export default function HomePage() {
 
       {/* Main entries */}
       <div className={styles.entries}>
-        <button className={`${styles.entryBtn} ${styles.entryLearn}`} onClick={() => nav('/tasks')}>
+        <button className={styles.entryBtn} onClick={() => nav('/tasks')}>
           <span className={styles.entryIconBox} style={{background:'rgba(200,149,108,.12)'}}>
-            <Icon name="book-open" size={28} color="var(--color-accent)" />
+            <Icon name="book-open" size={32} color="var(--color-accent)" />
           </span>
           <span className={styles.entryContent}>
             <span className={styles.entryTitle}>看教程</span>
-            <span className={styles.entryDesc}>{allTasks.length} 个任务包可选</span>
+            <span className={styles.entryDesc}>{allTasks.length} 个任务包</span>
           </span>
-          <Icon name="chevron-right" size={20} color="var(--color-ink-tertiary)" />
         </button>
-        <button className={`${styles.entryBtn} ${styles.entryChat}`} onClick={() => nav('/chat')}>
+        <button className={styles.entryBtn} onClick={() => nav('/chat')}>
           <span className={styles.entryIconBox} style={{background:'rgba(141,175,148,.12)'}}>
-            <Icon name="message-circle" size={28} color="var(--color-green)" />
+            <Icon name="message-circle" size={32} color="var(--color-green)" />
           </span>
           <span className={styles.entryContent}>
             <span className={styles.entryTitle}>问 AI 陪练</span>
-            <span className={styles.entryDesc}>自由对话，想问就问</span>
+            <span className={styles.entryDesc}>自由对话练习</span>
           </span>
-          <Icon name="chevron-right" size={20} color="var(--color-ink-tertiary)" />
         </button>
       </div>
 
@@ -125,7 +123,7 @@ export default function HomePage() {
       {activeTasks.length > 0 && (
         <div className={styles.sectionBlock}>
           <div className={styles.sectionHead}>
-            <span className={styles.sectionTitle}>📌 继续学习</span>
+            <span className={styles.sectionTitle}><Icon name="clock" size={18} color="var(--color-accent)" /> 继续学习</span>
             <span className={styles.sectionAll} onClick={() => nav('/tasks')}>全部 →</span>
           </div>
           {activeTasks.map(t => (
@@ -137,7 +135,7 @@ export default function HomePage() {
       {/* Recommended */}
       <div className={styles.sectionBlock}>
         <div className={styles.sectionHead}>
-          <span className={styles.sectionTitle}>🌟 推荐学习</span>
+          <span className={styles.sectionTitle}><Icon name="star" size={18} color="var(--color-amber)" /> 推荐学习</span>
           <span className={styles.sectionAll} onClick={() => nav('/tasks')}>更多 →</span>
         </div>
         {recommended.map(t => (

@@ -50,10 +50,10 @@ export default function ProfilePage() {
   const items = TASKS.map(t => ({ task: t, prog: progressMap[t.id] }));
 
   const achievements = useMemo(() => [
-    { icon: '🌟', title: '初次尝试', desc: '完成第1个任务', ok: stats.completed >= 1 },
-    { icon: '🔥', title: '学习达人', desc: '完成3个任务', ok: stats.completed >= 3 },
-    { icon: '🏆', title: '数字生活通', desc: '完成8个任务', ok: stats.completed >= 8 },
-    { icon: '🛡️', title: '安全意识', desc: '完成防诈骗', ok: progressMap['fangzhapian']?.status === 'completed' },
+    { icon: 'star', title: '初次尝试', desc: '完成第1个任务', ok: stats.completed >= 1 },
+    { icon: 'zap', title: '学习达人', desc: '完成3个任务', ok: stats.completed >= 3 },
+    { icon: 'award', title: '数字生活通', desc: '完成8个任务', ok: stats.completed >= 8 },
+    { icon: 'shield', title: '安全意识', desc: '完成防诈骗', ok: progressMap['fangzhapian']?.status === 'completed' },
   ], [stats.completed, progressMap]);
 
   return (
@@ -124,11 +124,11 @@ export default function ProfilePage() {
       </div>
 
       {/* Achievements */}
-      <div className={styles.sectionTitle}>🏅 成就</div>
+      <div className={styles.sectionTitle}><Icon name="award" size={18} color="var(--color-amber)" /> 成就</div>
       <div className={styles.achievements}>
         {achievements.map(a => (
           <div key={a.title} className={`${styles.achCard} ${a.ok ? styles.achCardUnlocked : ''}`}>
-            <div className={styles.achIcon}>{a.icon}</div>
+            <div className={styles.achIcon}><Icon name={a.icon as any} size={28} color={a.ok ? 'var(--color-accent)' : 'var(--color-ink-tertiary)'} /></div>
             <div className={styles.achTitle}>{a.ok ? a.title : '???'}</div>
             <div className={styles.achDesc}>{a.ok ? a.desc : '继续学习解锁'}</div>
           </div>
@@ -136,7 +136,7 @@ export default function ProfilePage() {
       </div>
 
       {/* Progress */}
-      <div className={styles.sectionTitle}>📖 学习进度</div>
+      <div className={styles.sectionTitle}><Icon name="book-open" size={18} color="var(--color-ink-secondary)" /> 学习进度</div>
       <div className={styles.progressList}>
         {items.map(({ task, prog }) => {
           if (!prog) return null;

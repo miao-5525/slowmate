@@ -24,7 +24,7 @@ export default function TaskCard({ task, status = 'not_started', onClick }: Prop
       <div className={styles.body}>
         <div className={styles.title}>
           {task.title}
-          {task.premium && <span className={styles.premiumTag}>🔒</span>}
+          {task.premium && <span className={styles.premiumTag}><Icon name="lock" size={14} color="var(--color-ink-tertiary)" /></span>}
           {task.isCustom && <span className={styles.customTag}>自定义</span>}
         </div>
         <div className={styles.desc}>{task.description}</div>

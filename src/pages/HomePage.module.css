@@ -27,19 +27,19 @@
 .heroDivider{width:1px;height:32px;background:rgba(0,0,0,.08)}
 
 /* ── Entry buttons ── */
-.entries{display:flex;flex-direction:column;gap:var(--space-sm);margin-bottom:var(--space-xl)}
+.entries{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-md);margin-bottom:var(--space-xl)}
 .entryBtn{
-  display:flex;align-items:center;gap:var(--space-md);
-  padding:20px var(--space-lg);border-radius:var(--radius-lg);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:var(--space-sm);
+  padding:var(--space-xl) var(--space-md);border-radius:var(--radius-xl);
   background:var(--color-surface);border:1px solid var(--color-border);
-  transition:all .2s var(--ease);text-align:left;
+  transition:all .2s var(--ease);text-align:center;min-height:150px;
 }
-.entryBtn:active{background:var(--color-accent-soft);border-color:var(--color-accent-light)}
+.entryBtn:active{background:var(--color-accent-soft);border-color:var(--color-accent-light);transform:scale(.97)}
 .entryIconBox{
-  width:52px;height:52px;border-radius:var(--radius-md);
-  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  width:60px;height:60px;border-radius:var(--radius-lg);
+  display:flex;align-items:center;justify-content:center;
 }
-.entryContent{flex:1;min-width:0}
+.entryContent{text-align:center}
 .entryTitle{display:block;font-size:var(--text-sm);font-weight:600;color:var(--color-ink);margin-bottom:2px}
 .entryDesc{display:block;font-size:var(--text-xs);color:var(--color-ink-tertiary)}
 
