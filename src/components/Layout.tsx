@@ -4,8 +4,9 @@ import styles from './Layout.module.css';
 
 const NAV = [
   { to: '/', label: '首页', icon: 'home' as const },
-  { to: '/tasks', label: '学任务', icon: 'book-open' as const },
+  { to: '/tasks', label: '任务包', icon: 'book-open' as const },
   { to: '/chat', label: '问陪练', icon: 'message-circle' as const, fab: true },
+  { to: '/help-book', label: '预约', icon: 'phone' as const },
   { to: '/profile', label: '我的', icon: 'user' as const },
 ];
 
