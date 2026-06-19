@@ -73,10 +73,12 @@ export default function ProfilePage() {
       </div>
 
       {/* Service cards */}
-      <div className={styles.sectionTitle}>⚡ 服务</div>
+      <div className={styles.sectionTitle}>服务</div>
       <div className={styles.serviceList}>
         <button className={styles.serviceBtn} onClick={() => nav('/task-builder')}>
-          <span className={styles.serviceIcon}>📝</span>
+          <span className={styles.serviceIconBox} style={{background:'var(--color-accent-soft)'}}>
+            <Icon name="plus" size={22} color="var(--color-accent)" />
+          </span>
           <div className={styles.serviceText}>
             <div className={styles.serviceLabel}>定制任务</div>
             <div className={styles.serviceHint}>帮爸妈DIY教程 · 已创建 {state.customTasks.length} 个</div>
@@ -85,7 +87,9 @@ export default function ProfilePage() {
         </button>
 
         <button className={styles.serviceBtn} onClick={() => nav('/member')}>
-          <span className={styles.serviceIcon}>{state.isMember ? '💎' : '⭐'}</span>
+          <span className={styles.serviceIconBox} style={{background: state.isMember ? 'var(--color-green-light)' : 'var(--color-amber-light)'}}>
+            <Icon name={state.isMember ? 'award' : 'star'} size={22} color={state.isMember ? 'var(--color-green)' : 'var(--color-amber)'} />
+          </span>
           <div className={styles.serviceText}>
             <div className={styles.serviceLabel}>{state.isMember ? '会员中心' : '升级会员'}</div>
             <div className={styles.serviceHint}>{state.isMember ? `已开通 · ${new Date(state.memberExpiry!).toLocaleDateString('zh-CN')} 到期` : '¥19.9/月 · 解锁高级任务'}</div>
@@ -97,16 +101,20 @@ export default function ProfilePage() {
           const c: ('normal'|'large'|'xlarge')[] = ['normal','large','xlarge'];
           dispatch({ type: 'SET_FONT_SIZE', fontSize: c[(c.indexOf(state.fontSize)+1)%c.length] });
         }}>
-          <span className={styles.serviceIcon}>🔤</span>
+          <span className={styles.serviceIconBox} style={{background:'var(--color-blue-light)'}}>
+            <Icon name="settings" size={22} color="var(--color-blue)" />
+          </span>
           <div className={styles.serviceText}>
             <div className={styles.serviceLabel}>字号设置</div>
             <div className={styles.serviceHint}>当前：{state.fontSize === 'normal' ? '标准' : state.fontSize === 'large' ? '大号' : '超大'} · 点击切换</div>
           </div>
-          <span style={{fontSize:'var(--text-xs)',color:'var(--color-accent)',fontWeight:600}}>切换</span>
+          <span className={styles.serviceToggle}>切换</span>
         </button>
 
         <button className={styles.serviceBtn} onClick={() => setShowKey(true)}>
-          <span className={styles.serviceIcon}>⚙️</span>
+          <span className={styles.serviceIconBox} style={{background:'var(--color-amber-light)'}}>
+            <Icon name="zap" size={22} color="var(--color-amber)" />
+          </span>
           <div className={styles.serviceText}>
             <div className={styles.serviceLabel}>AI 设置</div>
             <div className={styles.serviceHint}>DeepSeek API Key · {state.apiKey ? '已配置 ✓' : '未配置'}</div>
