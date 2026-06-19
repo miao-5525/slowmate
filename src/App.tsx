@@ -5,7 +5,7 @@ import HomePage from './pages/HomePage';
 import TasksPage from './pages/TasksPage';
 import TutorialPage from './pages/TutorialPage';
 import ChatPage from './pages/ChatPage';
-import ProgressPage from './pages/ProgressPage';
+import ProfilePage from './pages/ProfilePage';
 import styles from './App.module.css';
 
 export default function App() {
@@ -20,7 +20,7 @@ export default function App() {
               <Route path="task/:taskId" element={<TutorialPage />} />
               <Route path="chat" element={<ChatPage />} />
               <Route path="chat/:taskId" element={<ChatPage />} />
-              <Route path="progress" element={<ProgressPage />} />
+              <Route path="profile" element={<ProfilePage />} />
             </Route>
           </Routes>
         </div>

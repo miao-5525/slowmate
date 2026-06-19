@@ -244,7 +244,7 @@ export default function TutorialPage() {
             <div className={styles.celIcon}>🎉</div>
             <div className={styles.celTitle}>太棒了！</div>
             <div className={styles.celText}>你已经学会了<strong>「{task.title}」</strong><br/>离数字生活达人又近了一步！</div>
-            <button className={styles.celBtn} onClick={() => { setCelebrate(false); nav('/progress') }}>看看我的学习进度 →</button>
+            <button className={styles.celBtn} onClick={() => { setCelebrate(false); nav('/profile') }}>看看我的学习进度 →</button>
           </div>
         </div>
       )}
