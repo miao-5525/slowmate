@@ -396,7 +396,7 @@ export const TASKS: Task[] = [
         detail: '骗子常冒充客服、公检法、亲戚，说「退款」「中奖」「涉嫌犯罪」「急用钱」。',
         tip: '记住：天上不会掉馅饼。让你转账、给验证码的，先问家人！',
         warning: '真警察、真法院绝不会打电话让你转账或下载不明App。',
-        videoUrl: '//player.bilibili.com/player.html?bvid=BV11b411b7kk',
+        videoUrl: '//player.bilibili.com/player.html?bvid=BV1m3XkB8Erv',
         mockup: {
           appName: '防骗知识', highlightLabel: '',
           elements: [
