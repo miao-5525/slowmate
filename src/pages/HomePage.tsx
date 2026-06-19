@@ -121,12 +121,6 @@ export default function HomePage() {
         <Icon name="chevron-right" size={22} color="var(--color-ink-tertiary)" />
       </button>
 
-      {/* Emergency */}
-      <div className={styles.safetyBar}>
-        <button className={styles.safetyBtn} onClick={() => window.location.href = 'tel:110'}>
-          🆘 紧急求助
-        </button>
-      </div>
     </div>
   );
 }
