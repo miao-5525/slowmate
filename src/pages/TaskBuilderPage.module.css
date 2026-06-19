@@ -34,4 +34,23 @@
 .deleteBtn{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--color-red);font-size:18px;border:1px solid var(--color-red-light)}
 .deleteBtn:active{background:var(--color-red-light)}
 
+.stepBlockHeader{display:flex;justify-content:space-between;align-items:center;margin-bottom:var(--space-sm)}
+.removeStepBtn{font-size:var(--text-xs);color:var(--color-red);font-weight:500;padding:2px 12px;border-radius:var(--radius-full);border:1px solid var(--color-red-light)}
+.removeStepBtn:active{background:var(--color-red-light)}
+.formTextarea{width:100%;padding:var(--space-md);border-radius:var(--radius-md);border:2px solid var(--color-border);font-size:var(--text-sm);background:var(--color-surface);resize:vertical;min-height:60px;margin-top:var(--space-xs)}
+.formTextarea:focus{border-color:var(--color-accent)}
+
+.mockupEditor{background:var(--color-bg);border-radius:var(--radius-md);padding:var(--space-md);margin-top:var(--space-md)}
+.mockupEditorTitle{font-size:var(--text-xs);font-weight:600;color:var(--color-ink-secondary);margin-bottom:var(--space-sm)}
+.mockupRow{display:flex;align-items:center;gap:var(--space-sm);margin-bottom:var(--space-sm)}
+.mockupLabel{font-size:var(--text-xs);color:var(--color-ink-secondary);flex-shrink:0}
+.mockupInput{flex:1;padding:var(--space-xs) var(--space-sm);border-radius:var(--radius-sm);border:1.5px solid var(--color-border);font-size:var(--text-xs);background:var(--color-surface)}
+.mockupInput:focus{border-color:var(--color-accent)}
+.mockupInputSm{flex:1;padding:4px 8px;border-radius:6px;border:1.5px solid var(--color-border);font-size:12px;background:var(--color-surface)}
+.mockupElements{display:flex;flex-direction:column;gap:4px;margin-bottom:var(--space-sm)}
+.mockupEl{display:flex;align-items:center;gap:4px}
+.mockupSelect{padding:4px 8px;border-radius:6px;border:1.5px solid var(--color-border);font-size:12px;background:var(--color-surface);flex-shrink:0}
+.addMockupBtn{width:100%;padding:6px;border-radius:var(--radius-sm);border:1px dashed var(--color-border-strong);background:var(--color-surface);font-size:12px;color:var(--color-ink-tertiary)}
+.addMockupBtn:active{background:var(--color-border)}
+
 .limitHint{text-align:center;padding:var(--space-2xl);color:var(--color-ink-tertiary)}

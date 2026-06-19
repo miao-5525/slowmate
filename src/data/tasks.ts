@@ -919,6 +919,79 @@ export const TASKS: Task[] = [
     ],
     systemPrompt: `${SYS}\n\n教老人线上养生锻炼。提醒不买群友推荐的保健品。`,
   },
+
+  // ==================== 15. 购物退货 ====================
+  {
+    id: 'tuihuo', title: '购物退货', description: '在淘宝/拼多多申请退货退款',
+    icon: 'shopping-bag', iconBg: '#F9F0EF', category: 'life',
+    steps: [
+      {
+        title: '打开订单列表',
+        detail: '打开购物App → 点底部「我的」→「我的订单」或「待收货」，找到要退的那一单。',
+        tip: '收到货不满意、发错货、有质量问题都可以退。',
+        warning: '退货要在确认收货后7天内申请，超时可能退不了。',
+        mockup: {
+          appName: '我的订单', highlightLabel: '找到要退货的订单',
+          elements: [
+            { type: 'card', title: '🧥 羽绒服 黑色 XL', subtitle: '已收货 · ¥299 · 申请售后 >' },
+            { type: 'card', title: '👟 运动鞋 42码', subtitle: '运输中 · 预计明天送达' },
+          ],
+        },
+      },
+      {
+        title: '点击「申请售后」或「退货退款」',
+        detail: '点进订单详情，找到「申请售后」或「退货退款」按钮，点它。',
+        tip: '不管按钮叫什么名字，本质都是退。有的是「申请售后」有的是「退款/退货」。',
+        mockup: {
+          appName: '订单详情', highlightLabel: '点申请售后',
+          elements: [
+            { type: 'card', title: '🧥 羽绒服 · ¥299', subtitle: '已收货 · 2024-06-10' },
+            { type: 'button', label: '申请售后', color: 'orange', primary: true },
+            { type: 'button', label: '联系卖家' },
+          ],
+        },
+      },
+      {
+        title: '选择退货原因',
+        detail: '选一个退货原因：尺码不合适、质量问题、发错货、不想要了等。上传一张收到货的照片。',
+        tip: '选「7天无理由」退货最简单，卖家不能拒绝。拍照时拍商品全貌就行。',
+        warning: '退货理由要真实，不要虚假退货，否则可能被平台拉黑。',
+        mockup: {
+          appName: '申请退货', highlightLabel: '选退货原因',
+          elements: [
+            { type: 'list', items: ['📏 尺码不合适', '🔧 质量问题', '📦 发错货了', '😕 不想要了', '🔄 7天无理由'] },
+            { type: 'text', text: '📸 上传商品照片（必填）', size: 'sm' },
+          ],
+        },
+      },
+      {
+        title: '选择退货方式',
+        detail: '一般有两种：①「上门取件」快递员来你家取（推荐）；②「自行寄回」你自己去快递点寄。填好取件地址和时间。',
+        tip: '上门取件最方便，快递员会带快递单来，你不用准备任何东西。通常免费或从退款里扣几块钱运费。',
+        mockup: {
+          appName: '退货方式', highlightLabel: '推荐选上门取件',
+          elements: [
+            { type: 'card', title: '🚚 上门取件（推荐）', subtitle: '快递员上门 · 无需自己寄 · 运费险可抵' },
+            { type: 'card', title: '📮 自行寄回', subtitle: '自己去快递点寄 · 需填快递单号' },
+          ],
+        },
+      },
+      {
+        title: '提交申请，等待退款',
+        detail: '确认信息无误后点「提交」。卖家收到退货后会退款到你的支付账户（微信/支付宝），通常 1-3 天到账。',
+        tip: '在「退款/售后」里可以随时看退款进度。如果卖家拒绝，可以申请平台介入处理。',
+        mockup: {
+          appName: '退款进度', highlightLabel: '',
+          elements: [
+            { type: 'text', text: '✅ 退货申请已提交', size: 'md' },
+            { type: 'card', title: '退款金额：¥299.00', subtitle: '预计 1-3 个工作日到账' },
+            { type: 'highlight-box', text: '📦 等待快递员上门取件', color: 'orange' },
+          ],
+        },
+      },
+    ],
+    systemPrompt: `${SYS}\n\n教老人在淘宝/拼多多申请退货退款。提醒不要虚假退货。`,
+  },
 ];
 
 export const CATEGORY_LABELS: Record<string, string> = {
