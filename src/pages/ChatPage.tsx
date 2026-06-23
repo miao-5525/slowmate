@@ -10,19 +10,6 @@ import Icon from '../components/Icon';
 import TASKS from '../data/tasks';
 import styles from './ChatPage.module.css';
 
-// 自由对话模式预设问题
-const FREE_CHIPS = [
-  '我想学手机挂号 🏥',
-  '怎么缴水电费？💡',
-  '教我用手机打车 🚗',
-  '怎么跟儿女视频？📞',
-  '帮我看短信是不是诈骗 🛡️',
-  '想学在网上买东西 🛒',
-];
-
-// 任务学习模式预设
-const TASK_CHIPS = ['下一步', '再讲一遍', '这里不太懂', '我学会了！'];
-
 export default function ChatPage() {
   const { taskId } = useParams<{ taskId?: string }>();
   const nav = useNavigate();
@@ -38,16 +25,29 @@ export default function ChatPage() {
   const [loading, setLoading] = useState(false);
   const [voiceMode, setVoiceMode] = useState(false);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [suggestions, setSuggestions] = useState<string[]>([]); // 当前可选回复
   const fileRef = useRef<HTMLInputElement>(null);
   const endRef = useRef<HTMLDivElement>(null);
   const lastAIRef = useRef('');
 
-  // 根据场景切换预设对话
-  const chips = task ? TASK_CHIPS : FREE_CHIPS;
-
   useEffect(() => { if (taskId) startTask(taskId); }, [taskId, startTask]);
   useEffect(() => { if (transcript) setInput(transcript); }, [transcript]);
-  useEffect(() => { endRef.current?.scrollIntoView({ behavior: 'smooth' }); }, [messages, loading, imagePreview]);
+  useEffect(() => { endRef.current?.scrollIntoView({ behavior: 'smooth' }); }, [messages, loading, suggestions, imagePreview]);
+
+  // 首次进入自由模式时，自动发一条欢迎消息
+  useEffect(() => {
+    if (!taskId && messages.length === 0) {
+      handleInitialGreeting();
+    }
+  }, [taskId]);
+
+  async function handleInitialGreeting() {
+    setLoading(true);
+    const reply = await getMockReplyAsync('你好');
+    addMessage('assistant', reply.content);
+    setSuggestions(reply.suggestions);
+    setLoading(false);
+  }
 
   useEffect(() => {
     if (voiceMode && lastAIRef.current && tts.supported) {
@@ -78,11 +78,14 @@ export default function ChatPage() {
   };
   const removeImage = () => setImagePreview(null);
 
-  /** 发送消息 */
+  /** 发送消息（文本或预设选项） */
   const send = async (text?: string) => {
     const msg = (text ?? input).trim();
     const hasImage = !!imagePreview;
     if ((!msg && !hasImage) || loading) return;
+
+    // 清掉旧选项
+    setSuggestions([]);
 
     if (hasImage) {
       addMessage('user', msg || '帮我看看这张截图');
@@ -92,14 +95,9 @@ export default function ChatPage() {
       setTimeout(() => {
         addMessage(
           'assistant',
-          '📸 收到你的截图啦！\n\n' +
-            '目前演示版本还看不懂图片，不过别急～\n' +
-            '你可以用文字描述一下屏幕上有什么，我会一步一步帮你！\n\n' +
-            '比如告诉我：\n' +
-            '• 你现在用的是什么 App？\n' +
-            '• 屏幕上最上面写的什么标题？\n' +
-            '• 你看到了什么按钮？'
+          '📸 收到你的截图啦！\n\n目前演示版本还看不懂图片～\n你可以用文字描述屏幕上有什么，我一步一步帮你！'
         );
+        setSuggestions(['屏幕上有个蓝色按钮写了"确认"', '有个弹窗不知道点哪里', '换一个问题']);
         setLoading(false);
       }, 1000);
       return;
@@ -110,10 +108,11 @@ export default function ChatPage() {
     setInput('');
     setLoading(true);
 
-    // 模拟 AI 对话
-    const reply = (await getMockReplyAsync(msg)).content;
-    addMessage('assistant', reply);
-    lastAIRef.current = reply;
+    // 调模拟 AI
+    const reply = await getMockReplyAsync(msg);
+    addMessage('assistant', reply.content);
+    setSuggestions(reply.suggestions);
+    lastAIRef.current = reply.content;
     setLoading(false);
   };
 
@@ -151,28 +150,19 @@ export default function ChatPage() {
       {voiceMode && (
         <div className={styles.voiceBanner}>
           <span className={styles.voiceDot} />
-          <span>
-            语音对话中{listening ? ' — 正在听…' : tts.isSpeaking ? ' — 正在说…' : ''}
-          </span>
-          <button className={styles.voiceBannerClose} onClick={toggleVoiceMode}>
-            关闭
-          </button>
+          <span>语音对话中{listening ? ' — 正在听…' : tts.isSpeaking ? ' — 正在说…' : ''}</span>
+          <button className={styles.voiceBannerClose} onClick={toggleVoiceMode}>关闭</button>
         </div>
       )}
 
       {/* Messages */}
       <div className={styles.msgList}>
-        {messages.length === 0 && !imagePreview && (
+        {messages.length === 0 && !loading && (
           <div className={styles.empty}>
             <div className={styles.emptyIcon}>
               <Icon name="message-circle" size={44} color="var(--color-accent)" />
             </div>
-            <div className={styles.emptyTitle}>
-              {task ? `来练「${task.title}」吧！` : '有什么想学的？'}
-            </div>
-            <div className={styles.emptyHint}>
-              {task ? '我会一步一步陪着您练，慢慢来～' : '点下方标签快速体验 👇\n或者自己打字问我'}
-            </div>
+            <div className={styles.emptyTitle}>正在连接陪练员…</div>
           </div>
         )}
         {messages.map((m) => (
@@ -185,30 +175,30 @@ export default function ChatPage() {
             <div className={styles.typingDot} />
           </div>
         )}
-        <div ref={endRef} />
-      </div>
 
-      {/* 预设对话标签 —— 始终可见 */}
-      <div className={styles.chipsBar}>
-        {chips.map((chip) => (
-          <button
-            key={chip}
-            className={styles.chip}
-            onClick={() => send(chip)}
-            disabled={loading}
-          >
-            {chip}
-          </button>
-        ))}
+        {/* 预设选项 —— 在最新 AI 回复下方 */}
+        {suggestions.length > 0 && !loading && (
+          <div className={styles.suggestionsWrap}>
+            {suggestions.map((s) => (
+              <button
+                key={s}
+                className={styles.suggestionChip}
+                onClick={() => send(s)}
+              >
+                {s}
+              </button>
+            ))}
+          </div>
+        )}
+
+        <div ref={endRef} />
       </div>
 
       {/* Image preview */}
       {imagePreview && (
         <div className={styles.imgPreview}>
           <img src={imagePreview} alt="截图预览" className={styles.imgPreviewImg} />
-          <button className={styles.imgRemove} onClick={removeImage}>
-            ✕
-          </button>
+          <button className={styles.imgRemove} onClick={removeImage}>✕</button>
         </div>
       )}
 
@@ -223,24 +213,12 @@ export default function ChatPage() {
             className={`${styles.voiceBtn} ${listening ? styles.voiceActive : ''} ${voiceMode ? styles.voiceBtnBig : ''}`}
             onClick={handleVoice}
           >
-            <Icon
-              name="mic"
-              size={voiceMode ? 26 : 22}
-              color={listening ? 'var(--color-red)' : voiceMode ? 'var(--color-accent)' : 'var(--color-ink-tertiary)'}
-            />
+            <Icon name="mic" size={voiceMode ? 26 : 22} color={listening ? 'var(--color-red)' : voiceMode ? 'var(--color-accent)' : 'var(--color-ink-tertiary)'} />
           </button>
         )}
         <textarea
           className={styles.textInput}
-          placeholder={
-            imagePreview
-              ? '添加文字描述（可选）…'
-              : listening
-                ? '正在听您说话…'
-                : voiceMode
-                  ? '语音模式 — 直接说话'
-                  : '打字告诉我你想学什么…'
-          }
+          placeholder={listening ? '正在听您说话…' : voiceMode ? '语音模式 — 直接说话' : '或者自己打字…'}
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={(e) => {

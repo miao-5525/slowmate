@@ -24,21 +24,23 @@
 .inputBar{display:flex;gap:var(--space-sm);align-items:flex-end;padding:var(--space-md) var(--space-lg);background:var(--color-surface);border-top:1px solid var(--color-border);flex-shrink:0}
 
 /* 预设对话标签栏 */
-.chipsBar{
-  display:flex;gap:var(--space-sm);padding:var(--space-sm) var(--space-lg);
-  overflow-x:auto;flex-shrink:0;flex-wrap:wrap;
-  background:var(--color-surface);
-  -webkit-overflow-scrolling:touch;
+.chipsBar{display:none}
+
+/* 消息下方的可点击选项 */
+.suggestionsWrap{
+  display:flex;flex-wrap:wrap;gap:var(--space-sm);
+  padding:0 var(--space-lg) var(--space-md);
+  animation:fadeIn .3s;
 }
-.chipsBar::-webkit-scrollbar{display:none}
-.chip{
-  background:var(--color-accent-soft);border:1.5px solid var(--color-accent);
+.suggestionChip{
+  background:var(--color-surface);border:2px solid var(--color-accent);
   padding:var(--space-sm) var(--space-lg);border-radius:var(--radius-full);
   font-size:var(--text-sm);color:var(--color-accent);font-weight:600;
-  white-space:nowrap;transition:all .15s;cursor:pointer;
+  white-space:nowrap;cursor:pointer;transition:all .15s;
 }
-.chip:active{background:var(--color-accent);color:#fff;transform:scale(.96)}
-.chip:disabled{opacity:.5}
+.suggestionChip:active{
+  background:var(--color-accent);color:#fff;transform:scale(.96);
+}
 .textInput{flex:1;padding:var(--space-md) var(--space-lg);border-radius:var(--radius-full);font-size:var(--text-md);resize:none;min-height:48px;max-height:120px;background:var(--color-bg);border:1.5px solid var(--color-border);transition:border-color .2s}
 .textInput::placeholder{color:var(--color-ink-tertiary)}
 .textInput:focus{border-color:var(--color-accent)}
