@@ -4,7 +4,7 @@ import { useChat } from '../hooks/useChat';
 import { useProgress } from '../hooks/useProgress';
 import { useSpeechRecognition } from '../hooks/useSpeechRecognition';
 import { useTTS } from '../hooks/useTTS';
-import { getMockReplyAsync } from '../services/ai';
+import { getMockReplyAsync, resetChatState } from '../services/ai';
 import ChatBubble from '../components/ChatBubble';
 import Icon from '../components/Icon';
 import TASKS from '../data/tasks';
@@ -34,8 +34,9 @@ export default function ChatPage() {
   useEffect(() => { if (transcript) setInput(transcript); }, [transcript]);
   useEffect(() => { endRef.current?.scrollIntoView({ behavior: 'smooth' }); }, [messages, loading, suggestions, imagePreview]);
 
-  // 首次进入自由模式时，自动发一条欢迎消息
+  // 首次进入时重置对话状态并自动发欢迎消息
   useEffect(() => {
+    resetChatState();
     if (!taskId && messages.length === 0) {
       handleInitialGreeting();
     }
