@@ -1,0 +1,17 @@
+{
+  "name": "slowmate",
+  "buildCommand": "npm run build",
+  "outputDirectory": "docs",
+  "installCommand": "npm install",
+  "framework": null,
+  "rewrites": [
+    {
+      "source": "/api/deepseek/(.*)",
+      "destination": "/api/deepseek/$1"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/$1"
+    }
+  ]
+}

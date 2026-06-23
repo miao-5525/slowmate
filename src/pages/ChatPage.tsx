@@ -2,10 +2,9 @@ import { useState, useRef, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useChat } from '../hooks/useChat';
 import { useProgress } from '../hooks/useProgress';
-import { useAppState } from '../contexts/AppContext';
 import { useSpeechRecognition } from '../hooks/useSpeechRecognition';
 import { useTTS } from '../hooks/useTTS';
-import { chatWithDeepSeek, getMockReplyAsync } from '../services/ai';
+import { chatWithAI, getMockReplyAsync } from '../services/ai';
 import ChatBubble from '../components/ChatBubble';
 import Icon from '../components/Icon';
 import TASKS from '../data/tasks';
@@ -16,7 +15,6 @@ const QUICK = ['我想学网上挂号','怎么用手机缴费？','帮我看看�
 export default function ChatPage() {
   const { taskId } = useParams<{ taskId?: string }>();
   const nav = useNavigate();
-  const { state } = useAppState();
   const { startTask } = useProgress();
   const { supported: voiceOk, listening, transcript, start: vStart, stop: vStop } = useSpeechRecognition();
   const tts = useTTS();
@@ -103,13 +101,15 @@ export default function ChatPage() {
     setInput(''); setLoading(true);
     try {
       let reply: string;
-      if (state.apiKey) {
-        const allMsgs = buildAIMessages(sysPrompt);
-        allMsgs.push({ role: 'user', content: msg });
-        const r = await chatWithDeepSeek(allMsgs, state.apiKey);
-        reply = r.error ? `抱歉：${r.error}` : r.content || '嗯…换个方式问一下？';
-      } else {
+      // 先尝试真实 AI（服务端代理注入 Key），失败则降级模拟
+      const allMsgs = buildAIMessages(sysPrompt);
+      allMsgs.push({ role: 'user', content: msg });
+      const r = await chatWithAI(allMsgs);
+      if (r.error) {
+        // AI 不可用，降级为模拟回复
         reply = (await getMockReplyAsync()).content;
+      } else {
+        reply = r.content || '嗯…换个方式问一下？';
       }
       addMessage('assistant', reply);
       lastAIRef.current = reply;

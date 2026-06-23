@@ -1,0 +1,15 @@
+# Netlify 配置
+# 用于部署时启用 DeepSeek API 代理函数
+
+[build]
+  command = "npm run build"
+  publish = "docs"
+
+[functions]
+  directory = "netlify/functions"
+
+# 将 /api/deepseek/* 请求转发到代理函数
+[[redirects]]
+  from = "/api/deepseek/*"
+  to = "/.netlify/functions/deepseek-proxy"
+  status = 200
