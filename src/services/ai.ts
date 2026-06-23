@@ -1,83 +1,99 @@
 /**
- * AI 陪练服务
+ * 「慢慢来」AI 陪练模拟引擎
  *
- * 请求通过服务端代理发送到 DeepSeek API：
- * - 开发环境：Vite proxy（/api/deepseek → api.deepseek.com）
- * - 生产环境：Netlify Function 代理
- *
- * API Key 配置在服务端（.env / Netlify 环境变量），浏览器不接触 Key。
- * 服务端无 Key 时自动降级为模拟回复。
+ * 基于关键词匹配的智能模拟对话，覆盖六大任务场景。
+ * 让试用者无需 API Key 也能体验完整的陪练流程。
  */
-
-const API_URL = '/api/deepseek/v1/chat/completions';
-const MODEL = 'deepseek-chat';
-
-interface AIMessage {
-  role: string;
-  content: string;
-}
 
 export interface AIResponse {
   content: string;
   error?: string;
 }
 
-/**
- * 调用 AI（通过服务端代理，无需传 API Key）
- */
-export async function chatWithAI(messages: AIMessage[]): Promise<AIResponse> {
-  try {
-    const response = await fetch(API_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model: MODEL,
-        messages,
-        temperature: 0.7,
-        max_tokens: 800,
-      }),
-    });
+// ==========================================
+// 智能模拟回复 —— 关键词匹配 + 场景响应
+// ==========================================
 
-    if (!response.ok) {
-      // 代理未配置 Key → 降级模拟
-      if (response.status === 401 || response.status === 403) {
-        return { content: '', error: 'AI 服务未配置，使用模拟陪练' };
-      }
-      const err = await response.json().catch(() => ({}));
-      return { content: '', error: (err as any)?.error?.message ?? `请求失败 (${response.status})` };
-    }
+function smartMockReply(input: string): string {
+  const msg = input.trim();
 
-    const data = await response.json();
-    return { content: data.choices?.[0]?.message?.content ?? '' };
-  } catch {
-    return { content: '', error: '网络连接失败，切换为模拟陪练' };
+  // ---- 问候 ----
+  if (/^(你好|您好|嗨|早上好|下午好|晚上好|在吗|在不在|hi|hello)/i.test(msg)) {
+    const h = new Date().getHours();
+    const g = h < 12 ? '上午好' : h < 18 ? '下午好' : '晚上好';
+    return `${g}！😊 我是您的数字生活陪练"小慢"。\n\n您想学点什么呢？我陪着您一步一步来～\n\n🏥 线上挂号  💡 生活缴费  🚗 打车出行\n📞 视频通话  🛒 手机购物  🛡️ 防骗指南`;
   }
+
+  // ---- 防骗/安全 ----
+  if (/诈骗|骗子|验证码|转账|汇款|中奖|陌生.*链接|密码|银行卡|安全账户|刷单/.test(msg)) {
+    return `⚠️ 您说到了非常重要的事情！记住三个"绝对不"：\n\n❌ 验证码绝对不要告诉任何人\n❌ 绝对不给陌生人转账\n❌ 陌生链接绝对不要点\n\n📌 银行、公安局、法院绝对不会电话里找您要验证码或密码。\n\n如果有人让您做这些事，先挂电话，给子女打电话问一下。全国反诈热线：96110。`;
+  }
+
+  // ---- 挂号 ----
+  if (/挂号|医院|看病|预约|门诊|科室|专家/.test(msg)) {
+    return `好的，咱们来学「🏥 线上挂号」！\n\n第 1 步：打开微信，点顶部的 🔍 搜索框，输入您要去的医院名字。\n\n找到医院公众号后点「关注」——注意看名字旁边有没有蓝色 ✓ 认证标志，有才是真的。\n\n准备好了跟我说"下一步"～`;
+  }
+
+  // ---- 缴费 ----
+  if (/缴费|水费|电费|燃气|煤气|话费|宽带|账单/.test(msg)) {
+    return `好的，咱们来学「💡 生活缴费」！\n\n第 1 步：打开微信 → 点右下角「我」→ 点「服务」→ 找到「生活缴费」点进去。\n\n您会看到水费、电费、燃气费这些图标，点您要交的那个就行。\n\n准备好了说"下一步"～`;
+  }
+
+  // ---- 打车 ----
+  if (/打车|出行|滴滴|叫车|导航|高德|地图|出门/.test(msg)) {
+    return `好的，咱们来学「🚗 打车出行」！\n\n第 1 步：打开微信，在聊天列表往下拉，找到「滴滴出行」小程序点开。\n\n手机会自动定位您在哪儿，您只需要在"您去哪儿"那里输入目的地就行。\n\n🛡️ 安全提醒：上车前一定要核对手机上显示的车牌号，和来的车是不是一样的。\n\n准备好了说"下一步"～`;
+  }
+
+  // ---- 视频通话 ----
+  if (/视频|通话|微信.*电话|聊天|儿女|家人|孙子/.test(msg)) {
+    return `好的，咱们来学「📞 视频通话」！\n\n第 1 步：打开微信 → 点底部「通讯录」→ 找到您想视频的人。\n\n或者直接在聊天列表里点开和 ta 的聊天窗口。\n\n准备好后跟我说"下一步"～`;
+  }
+
+  // ---- 购物 ----
+  if (/购物|买.*东西|淘宝|拼多多|快递|下单|退货/.test(msg)) {
+    return `好的，咱们来学「🛒 手机购物」！\n\n第 1 步：打开淘宝或拼多多 App。先在顶部搜索框输入您想买的东西，比如"老年健步鞋"。\n\n🛡️ 安全提醒：只在官方 App 里买东西，不要点别人发来的链接付款！\n\n准备好了说"下一步"～`;
+  }
+
+  // ---- 下一步 / 继续 ----
+  if (/下一步|继续|然后|接下来|好了|完成了|可以了|学了/.test(msg)) {
+    return `太棒了！👍 您真厉害！\n\n这一步完成啦。每学会一步，您就离独立操作更近一步。\n\n需要我再讲一遍刚才的内容吗？还是继续学下一步？`;
+  }
+
+  // ---- 不会 / 不懂 ----
+  if (/不会|不懂|不明白|再说|没找到|找不到|没有/.test(msg)) {
+    return `没关系的，这个很正常～我刚开始用手机的时候也经常找不到 😊\n\n您别着急，咱们换个办法：\n1. 先把手机放桌上\n2. 看看屏幕最上面写的是什么？\n3. 告诉我您看到了什么，我帮您找到下一步`;
+  }
+
+  // ---- 感谢 ----
+  if (/谢谢|感谢|太.*好|棒|厉害/.test(msg)) {
+    return `不客气！😊 能帮到您我也很开心～\n\n学手机这件事，慢慢来，每天学会一小步，您会越来越熟练的。\n\n还想学点什么吗？随时跟我说！`;
+  }
+
+  // ---- 默认引导 ----
+  const replies = [
+    '您想学点什么呢？直接告诉我就行～\n\n比如：\n• "我想学挂号"\n• "怎么缴水电费"\n• "教我视频通话"\n• "帮我看短信是不是诈骗"\n\n或者点下方标签快速开始 👇',
+    '没关系，慢慢想～\n\n手机上的事儿看着挺多，其实分成几类：看病挂号、交水电费、出门打车、跟家人视频、网上买东西、还有最重要的防骗。\n\n您对哪个感兴趣？',
+    '咱们一步一步来，不着急。\n\n要不您先跟我说说，最近用手机的时候有没有遇到什么困难？我帮您想办法～',
+  ];
+  return replies[Math.floor(Math.random() * replies.length)];
 }
 
 // ==========================================
-// 模拟回复（AI 不可用时的降级方案）
+// 对外接口
 // ==========================================
 
-const MOCK_REPLIES = [
-  '您好呀！我是您的数字生活陪练员"小慢" 🐢\n\n别着急，我们一步一步来。您想先学什么呀？',
-  '好的，没问题！我们先从第一步开始。您先把手机解锁，找到微信的图标——就是一个绿色的、上面有两个白色小人的图标。找到了吗？',
-  '太棒了！👍 您真厉害！\n\n接下来第二步：点开微信后，在屏幕最下面找到"通讯录"三个字。',
-  '非常好！✨ 您学得真快！\n\n这一步完成啦。还需要我再讲一遍，还是继续下一步？',
-  '嗯，这一步确实容易让人迷糊，没关系的～\n\n我换个方式再说一遍：您看屏幕最上面有没有放大镜图标？点它，然后输入您想找的东西。',
-  '⚠️ 等一下！这个我要特别提醒您——如果有人让您告诉对方验证码，千万要小心！\n\n验证码就像您家门的钥匙，绝对不能给别人。',
-  '恭喜您！🎉 您已经完成了今天的学习！\n\n今天您学了如何用手机操作，真的非常棒！下次还可以继续找我练习哦～',
-];
-
-let mockIndex = 0;
-
-export function getMockReply(): string {
-  const reply = MOCK_REPLIES[mockIndex % MOCK_REPLIES.length];
-  mockIndex++;
-  return reply;
+/** 同步获取模拟回复 */
+export function getMockReply(userInput?: string): string {
+  if (userInput) return smartMockReply(userInput);
+  return '您好呀！我是"小慢" 🐢\n\n有什么想学的吗？点下面的标签快速开始吧～';
 }
 
-export function getMockReplyAsync(): Promise<AIResponse> {
+/** 异步模拟回复（带延迟，模拟真实 AI 等待感） */
+export function getMockReplyAsync(userInput?: string): Promise<AIResponse> {
   return new Promise((resolve) => {
-    setTimeout(() => resolve({ content: getMockReply() }), 600 + Math.random() * 1200);
+    const delay = 800 + Math.random() * 1200; // 0.8~2 秒
+    setTimeout(() => {
+      resolve({ content: getMockReply(userInput) });
+    }, delay);
   });
 }
